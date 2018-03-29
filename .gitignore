@@ -19,4 +19,4 @@ log/*
 
 dump.rdb
 .env
-influencers_test.csv
+test_influencers.csv

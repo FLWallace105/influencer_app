@@ -2,26 +2,10 @@ class Influencer < ApplicationRecord
   has_many :orders, class_name: 'InfluencerOrder'
   has_many :tracking_info, class_name: 'InfluencerTracking'
 
-  def self.import(file)
-    counter = 0
-    CSV.foreach(file.path, headers: true, header_converters: :symbol) do |row|
-      influencer = Influencer.assign_from_row(row)
-      collection_id = row[:collection_id]
-
-      if collection_id.try(:strip).try(:present?) && influencer.save
-        counter += 1
-        orders = influencer.create_orders_from_collection(
-          collection_id: collection_id,
-          shipping_method_requested: row[:shipping_method_requested]
-        )
-
-        puts "created #{orders.count} orders for #{influencer.first_name} #{influencer.last_name}"
-      else
-        puts "#{influencer.emal} - #{influencer.errors.full_messages.join(',')}"
-      end
-    end
-    counter
-  end
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :address1, presence: true
+  validates :city, presence: true
 
   def self.assign_from_row(row)
     influencer = find_or_initialize_by(email: row[:email])
@@ -63,7 +47,7 @@ class Influencer < ApplicationRecord
       'Leggings' => bottom_size,
       'Tops' => top_size,
       'Sports Bra' => bra_size,
-      'Jacket' => sports_jacket_size,
+      'Jacket' => sports_jacket_size
     }
   end
 
@@ -75,7 +59,7 @@ class Influencer < ApplicationRecord
       'zip' => zip,
       'province_code' => state,
       'country_code' => 'US',
-      'phone' => phone,
+      'phone' => phone
     }
   end
 
@@ -86,7 +70,7 @@ class Influencer < ApplicationRecord
   def shipping_address
     address.merge(
       'first_name' => first_name,
-      'last_name' => last_name,
+      'last_name' => last_name
     )
   end
 end
