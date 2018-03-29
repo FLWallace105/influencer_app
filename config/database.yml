@@ -1,0 +1,25 @@
+development:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: influencers_dev
+  pool:     8
+  username: durrellchamorro
+  password:
+
+test:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: influencers_test
+  pool:     8
+  username: durrellchamorro
+  password:
+
+production:
+  url:  <%= ENV["DATABASE_URL"] %>
+  pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 8 %>
+
+staging:
+  url:  <%= ENV["DATABASE_URL"] %>
+  pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 8 %>
