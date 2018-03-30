@@ -80,8 +80,11 @@ ActiveRecord::Schema.define(version: 20180327185814) do
     t.string "bottom_size"
     t.string "sports_jacket_size"
     t.boolean "three_item"
+    t.string "shipping_method_requested"
+    t.bigint "collection_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["updated_at"], name: "index_influencers_on_updated_at"
   end
 
   create_table "product_variants", id: :bigint, default: nil, force: :cascade do |t|

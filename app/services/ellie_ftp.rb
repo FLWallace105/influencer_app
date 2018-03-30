@@ -19,6 +19,7 @@ class EllieFTP < Net::FTP
     chdir directory
     put(File.open(file))
     close
+    File.delete(file)
     puts 'Successfully uploaded CSV'
   end
 end

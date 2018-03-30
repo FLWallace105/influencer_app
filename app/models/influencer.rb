@@ -2,40 +2,25 @@ class Influencer < ApplicationRecord
   has_many :orders, class_name: 'InfluencerOrder'
   has_many :tracking_info, class_name: 'InfluencerTracking'
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :address1, presence: true
-  validates :city, presence: true
+  validates_presence_of :first_name
+  validates_presence_of :last_name
+  validates_presence_of :address1
+  validates_presence_of :city
+  validates_presence_of :collection_id
 
   def self.assign_from_row(row)
     influencer = find_or_initialize_by(email: row[:email])
     influencer.assign_attributes(
       row.to_hash.slice(
         :first_name, :last_name, :address1, :address2, :city, :state, :zip,
-        :phone, :bra_size, :top_size, :bottom_size,
-        :sports_jacket_size
+        :phone, :bra_size, :top_size, :bottom_size, :sports_jacket_size,
+        :shipping_method_requested, :collection_id
       )
     )
     influencer
   end
 
-  # shipping_lines are to override the default shipping line data
-  def create_orders_from_collection(collection_id:, shipping_method_requested: nil, shipping_lines: nil)
-    sized_variants = sized_variants_from_collection(collection_id)
-    order_number = InfluencerOrder.generate_order_number
-
-    sized_variants.map do |variant|
-      InfluencerOrder.create_from_influencer_variant(
-        influencer: self,
-        variant: variant,
-        shipping_method_requested: shipping_method_requested,
-        shipping_lines: shipping_lines,
-        order_number: order_number
-      )
-    end
-  end
-
-  def sized_variants_from_collection(collection_id)
+  def sized_variants_from_collection
     product_ids = Collect.where(collection_id: collection_id).pluck(:product_id)
     variants = ProductVariant.where(product_id: product_ids)
     variants.select do |variant|

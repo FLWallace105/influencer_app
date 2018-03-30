@@ -1,8 +1,7 @@
 <h1 class='text-center'> Upload Influencers From CSV And Create Their Orders </h1>
-<div class='alert alert-info' >
-  Import influencers from a csv and create orders for them.
-  If an influencer already exists it will be updated and an order will
-  still be created for that influencer.
+<div class='alert alert-info text-center' >
+  Save influencers from a csv to the database.
+  Influencers that already exist will be updated.
 </div>
 <%= form_for @import, url: import_influencers_path, multipart: true do |f| %>
   <% if @import.errors.any? %>

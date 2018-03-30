@@ -9,9 +9,9 @@ class InfluencerOrder < ApplicationRecord
      prefix + (0..9).map{ORDER_NUMBER_CHARACTERS.sample}.join
    end
 
-  def self.create_from_influencer_variant(influencer:, variant:, shipping_method_requested:, shipping_lines:, order_number:)
-    # shipping lines blank most of the time
-    create(
+  def self.new_from_influencer_variant(influencer:, variant:, shipping_method_requested:, order_number:, shipping_lines: nil)
+    # Shipping_lines are to override the default shipping line data; they are blank most (all?) of the time.
+    new(
       name: order_number || generate_order_number,
       processed_at: Time.current,
       billing_address: influencer.billing_address,

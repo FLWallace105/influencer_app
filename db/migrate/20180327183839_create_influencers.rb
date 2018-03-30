@@ -15,7 +15,10 @@ class CreateInfluencers < ActiveRecord::Migration[5.1]
       t.string :bottom_size
       t.string :sports_jacket_size
       t.boolean :three_item
-
+      t.string :shipping_method_requested
+      t.bigint :collection_id
+      t.index :updated_at
+      
       t.timestamps
     end
   end

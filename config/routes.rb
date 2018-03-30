@@ -20,9 +20,10 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :influencer_orders, only: [:index] do
+    resources :influencer_orders, only: [:index, :new] do
       collection do
         post :upload
+        post :create
       end
     end
   end
