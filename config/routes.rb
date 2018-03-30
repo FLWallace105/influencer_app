@@ -13,9 +13,16 @@ Rails.application.routes.draw do
         post :import
       end
     end
+
     resource :shopify_cache, only: [] do
       collection do
         put :refresh_all
+      end
+    end
+
+    resources :influencer_orders, only: [:index] do
+      collection do
+        post :upload
       end
     end
   end

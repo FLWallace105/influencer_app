@@ -23,6 +23,7 @@ class Influencer < ApplicationRecord
   def create_orders_from_collection(collection_id:, shipping_method_requested: nil, shipping_lines: nil)
     sized_variants = sized_variants_from_collection(collection_id)
     order_number = InfluencerOrder.generate_order_number
+
     sized_variants.map do |variant|
       InfluencerOrder.create_from_influencer_variant(
         influencer: self,

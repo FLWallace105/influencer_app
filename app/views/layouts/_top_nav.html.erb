@@ -52,21 +52,14 @@
                 <%= link_to "Download CSV", '#' %>
               </li>
               <li>
-                <%= link_to "View Influencers", '#' %>
+                <%= link_to "View Influencers", influencers_path %>
               </li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-              Orders
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
+              <li class="divider" role="separator"></li>
               <li>
-                <%= link_to "View Orders", '#' %>
+                <%= link_to "View Orders", influencer_orders_path %>
               </li>
               <li>
-                <%= link_to "Upload New Orders", '#' %>
+                <%= link_to "Upload New Orders", upload_influencer_orders_path, data: { confirm: "Are you sure you want to send influencer orders to the warehouse?" }, method: :post %>
               </li>
             </ul>
           </li>

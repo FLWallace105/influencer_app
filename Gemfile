@@ -11,7 +11,7 @@ gem 'puma', '~> 3.7'
 gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'resque', '~> 1.27', '>= 1.27.4'
 gem 'shopify_api', '~> 4.11'
-
+gem 'iconv', '~> 1.0', '>= 1.0.5'
 
 # DATABASE:
 gem 'pg', '~> 1.0'
@@ -37,7 +37,6 @@ group :development, :test do
   gem 'pry-rails', '~> 0.3.6' # cause rails console to use pry
   gem 'pry-byebug', '~> 3.6' # adds step-by-step debugging features
   gem 'rspec-rails', '~> 3.7', '>= 3.7.2'
-  gem 'faker', '~> 1.8', '>= 1.8.7'
 end
 
 group :development do
