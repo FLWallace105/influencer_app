@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :product do
     id { Faker::Number.number(10) }
-    trait :with_collection do
+    trait :with_collection_and_variants do
       after(:create) do |product|
         custom_collection = create(:custom_collection)
         FactoryBot.create(:collect, collection: custom_collection, product: product )

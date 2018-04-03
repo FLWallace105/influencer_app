@@ -17,7 +17,7 @@ RSpec.describe "Influencers Import" do
         expect_to_see 'Imported 1 influencer.'
       end
 
-      it 'does not create an influencer order' do
+      it 'does not create an influencer_order' do
         user = create(:user)
         visit new_user_session_path
         login(user)
@@ -45,6 +45,28 @@ RSpec.describe "Influencers Import" do
         expect(Influencer.count).to eq 3
 
         expect_to_see 'Imported 3 influencers.'
+      end
+
+      it 'updates the updated_at column even if nothing is different in the csv row from the database' do
+        user = create(:user)
+        visit new_user_session_path
+        login(user)
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
+        end
+        click_on 'Upload CSV'
+        attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
+        click_on 'Upload Influencers'
+        first_updated_at_value = Influencer.first.updated_at
+
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
+        end
+        click_on 'Upload CSV'
+        attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
+        click_on 'Upload Influencers'
+
+        expect(Influencer.first.updated_at).not_to eq first_updated_at_value
       end
     end
   end

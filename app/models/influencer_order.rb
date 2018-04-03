@@ -3,6 +3,10 @@ class InfluencerOrder < ApplicationRecord
   has_one(:tracking, class_name: 'InfluencerTracking', foreign_key: 'order_name',
                      primary_key: 'name')
 
+  validates_presence_of :name
+  validates_presence_of :shipping_address
+  validates_presence_of :line_item
+
    ORDER_NUMBER_CHARACTERS = [('a'..'z').to_a, ('A'..'Z').to_a, ('0'..'9').to_a].flatten.to_a.freeze
 
    def self.generate_order_number(prefix: '#IN')

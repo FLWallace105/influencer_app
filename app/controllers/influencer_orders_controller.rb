@@ -6,7 +6,10 @@ class InfluencerOrdersController < ApplicationController
   def create
     @influencer_order_creator = InfluencerOrder::Creator.new
 
-    if @influencer_order_creator.save
+    if InfluencerOrder.where("created_at >= ?", Time.zone.now.beginning_of_month).any?
+      flash[:danger] = 'Influencer orders were already created this month.'
+      redirect_to new_influencer_order_path
+    elsif @influencer_order_creator.save
       flash[:success] =
         "#{@influencer_order_creator.created_count}
         #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
@@ -14,7 +17,7 @@ class InfluencerOrdersController < ApplicationController
     else
       flash.now[:danger] =
         "Uh oh. Something went wrong. #{@influencer_order_creator.created_count}
-        #{'product'.pluralize(@influencer_order_creator.created_count)} are queued to ship."
+        #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
       render new_influencer_order_path
     end
   end
