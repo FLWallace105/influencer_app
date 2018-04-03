@@ -24,9 +24,9 @@ body {
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 
-body > .container {
+/*body > .container {
   padding: 60px 15px 0;
-}
+}*/
 .container .text-muted {
   margin: 20px 0;
 }
@@ -36,6 +36,6 @@ body > .container {
   padding-left: 15px;
 }
 
-code {
+/*code {
   font-size: 80%;
-}
+}*/

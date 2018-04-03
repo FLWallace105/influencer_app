@@ -1,6 +1,4 @@
 module ShopifyCache
-  extend ActiveSupport::Concern
-
   # Caches both Products and the associated ProductVariants
   def self.pull_products
     pull_entity(ShopifyAPI::Product, Product) do |product_data|
@@ -21,9 +19,14 @@ module ShopifyCache
     pull_entity ShopifyAPI::CustomCollection, CustomCollection
   end
 
+  def self.pull_orders
+    pull_entity ShopifyAPI::Order, ShopifyOrder
+  end
+
   def self.pull_all
     pull_collects
     pull_custom_collections
+    pull_orders
     pull_products
   end
 

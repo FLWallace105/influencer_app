@@ -1,7 +1,7 @@
 class CreateShopifyCache < ActiveRecord::Migration[5.1]
   def change
 
-    create_table :orders, id: false do |t|
+    create_table :shopify_orders, id: false do |t|
       t.bigint :id, null: false, primary_key: true
       t.bigint :app_id
       t.json :billing_address

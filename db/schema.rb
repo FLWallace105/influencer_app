@@ -80,11 +80,64 @@ ActiveRecord::Schema.define(version: 20180327185814) do
     t.string "bottom_size"
     t.string "sports_jacket_size"
     t.boolean "three_item"
+    t.string "shipping_method_requested"
+    t.bigint "collection_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["updated_at"], name: "index_influencers_on_updated_at"
   end
 
-  create_table "orders", id: :bigint, default: nil, force: :cascade do |t|
+  create_table "product_variants", id: :bigint, default: nil, force: :cascade do |t|
+    t.string "barcode"
+    t.float "compare_at_price"
+    t.datetime "created_at"
+    t.string "fulfillment_service"
+    t.integer "grams"
+    t.bigint "image_id"
+    t.string "inventory_management"
+    t.string "inventory_policy"
+    t.integer "inventory_quantity"
+    t.integer "old_inventory_quantity"
+    t.integer "inventory_quantity_adjustment"
+    t.bigint "inventory_item_id"
+    t.boolean "requires_shipping"
+    t.text "metafield"
+    t.string "option1"
+    t.string "option2"
+    t.string "option3"
+    t.integer "position"
+    t.float "price"
+    t.bigint "product_id"
+    t.string "sku"
+    t.boolean "taxable"
+    t.string "title"
+    t.datetime "updated_at"
+    t.integer "weight"
+    t.string "weight_unit"
+    t.string "tax_code", default: "", null: false
+  end
+
+  create_table "products", id: :bigint, default: nil, force: :cascade do |t|
+    t.text "body_html"
+    t.datetime "created_at"
+    t.string "handle"
+    t.json "image"
+    t.json "images"
+    t.json "options"
+    t.string "product_type"
+    t.datetime "published_at"
+    t.string "published_scope"
+    t.string "tags"
+    t.string "template_suffix"
+    t.string "title"
+    t.string "metafields_global_title_tag"
+    t.string "metafields_global_description_tag"
+    t.datetime "updated_at"
+    t.text "variants"
+    t.string "vendor"
+  end
+
+  create_table "shopify_orders", id: :bigint, default: nil, force: :cascade do |t|
     t.bigint "app_id"
     t.json "billing_address"
     t.string "browser_ip"
@@ -145,56 +198,6 @@ ActiveRecord::Schema.define(version: 20180327185814) do
     t.datetime "updated_at"
     t.bigint "user_id"
     t.datetime "sent_to_acs_at"
-  end
-
-  create_table "product_variants", id: :bigint, default: nil, force: :cascade do |t|
-    t.string "barcode"
-    t.float "compare_at_price"
-    t.datetime "created_at"
-    t.string "fulfillment_service"
-    t.integer "grams"
-    t.bigint "image_id"
-    t.string "inventory_management"
-    t.string "inventory_policy"
-    t.integer "inventory_quantity"
-    t.integer "old_inventory_quantity"
-    t.integer "inventory_quantity_adjustment"
-    t.bigint "inventory_item_id"
-    t.boolean "requires_shipping"
-    t.text "metafield"
-    t.string "option1"
-    t.string "option2"
-    t.string "option3"
-    t.integer "position"
-    t.float "price"
-    t.bigint "product_id"
-    t.string "sku"
-    t.boolean "taxable"
-    t.string "title"
-    t.datetime "updated_at"
-    t.integer "weight"
-    t.string "weight_unit"
-    t.string "tax_code", default: "", null: false
-  end
-
-  create_table "products", id: :bigint, default: nil, force: :cascade do |t|
-    t.text "body_html"
-    t.datetime "created_at"
-    t.string "handle"
-    t.json "image"
-    t.json "images"
-    t.json "options"
-    t.string "product_type"
-    t.datetime "published_at"
-    t.string "published_scope"
-    t.string "tags"
-    t.string "template_suffix"
-    t.string "title"
-    t.string "metafields_global_title_tag"
-    t.string "metafields_global_description_tag"
-    t.datetime "updated_at"
-    t.text "variants"
-    t.string "vendor"
   end
 
   create_table "users", force: :cascade do |t|
