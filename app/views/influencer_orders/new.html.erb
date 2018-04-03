@@ -1,15 +1,19 @@
-<h1 class='text-center'> Create Influencer Orders </h1>
-<div class='alert alert-info text-center' >
-  Create orders for all influencers who were either updated or created today.
-  WARNING: If this is done more than once a day, duplicate orders will be created!
-</div>
-<%= form_for @influencer_order_creator, url: influencer_orders_path, method: :post do |f| %>
-  <% if @influencer_order_creator.errors.any? %>
-    <div class="alert alert-danger" role="alert">
-      <% @import.errors.full_messages.each do |msg| %>
-        <div><%= msg %></div>
-      <% end %>
+<div class='row'>
+  <div class="col col-sm-12"</div>
+    <h1 class='text-center'> Create Influencer Orders </h1>
+    <div class='alert alert-info text-center' >
+      Create orders for all influencers who were either updated or created today.
+      WARNING: If this is done more than once a day, duplicate orders will be created!
     </div>
-  <% end %>
-  <%= f.submit 'Create Influencer Orders', class: 'btn btn-primary' %>
-<% end %>
+    <%= form_for @influencer_order_creator, url: influencer_orders_path, method: :post do |f| %>
+      <% if @influencer_order_creator.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <% @import.errors.full_messages.each do |msg| %>
+            <div><%= msg %></div>
+          <% end %>
+        </div>
+      <% end %>
+      <%= f.submit 'Create Influencer Orders', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

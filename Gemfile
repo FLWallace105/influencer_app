@@ -37,6 +37,7 @@ group :development, :test do
   gem 'pry-rails', '~> 0.3.6' # cause rails console to use pry
   gem 'pry-byebug', '~> 3.6' # adds step-by-step debugging features
   gem 'rspec-rails', '~> 3.7', '>= 3.7.2'
+  gem 'timecop', '~> 0.9.1'
 end
 
 group :development do

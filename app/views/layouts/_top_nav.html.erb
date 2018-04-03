@@ -39,7 +39,7 @@
                </li>
              </ul>
            </li>
-          <li class="dropdown">
+          <li id='influencers_dropdown' class="dropdown">
             <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
               Influencers
               <span class="caret"></span>
@@ -56,7 +56,7 @@
               </li>
             </ul>
           </li>
-          <li class="dropdown">
+          <li id='orders_dropdown'class="dropdown">
             <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
               Orders
               <span class="caret"></span>
@@ -69,7 +69,7 @@
                 <%= link_to "New Influencer Orders", new_influencer_order_path %>
               </li>
               <li>
-                <%= link_to "Upload Influencer Orders", upload_influencer_orders_path, data: { confirm: "Are you sure you want to send influencer orders to the warehouse?" }, method: :post %>
+                <%= link_to "Send Influencer Orders to Warehouse", upload_influencer_orders_path, data: { confirm: "Are you sure you want to send influencer orders to the warehouse?" }, method: :post %>
               </li>
             </ul>
           </li>

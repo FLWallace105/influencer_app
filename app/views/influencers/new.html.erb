@@ -1,16 +1,20 @@
-<h1 class='text-center'> Upload Influencers From CSV And Create Their Orders </h1>
-<div class='alert alert-info text-center' >
-  Save influencers from a csv to the database.
-  Influencers that already exist will be updated.
-</div>
-<%= form_for @import, url: import_influencers_path, multipart: true do |f| %>
-  <% if @import.errors.any? %>
-    <div class="alert alert-danger" role="alert">
-      <% @import.errors.full_messages.each do |msg| %>
-        <div><%= msg %></div>
-      <% end %>
+<div class='row'>
+  <div class="col col-sm-12"</div>
+    <h1 class='text-center'> Upload Influencers From CSV </h1>
+    <div class='alert alert-info text-center' >
+      Save influencers from a csv to the database.
+      Influencers that already exist will be updated.
     </div>
-  <% end %>
-  <%= f.file_field :file %>
-  <%= f.submit 'Upload Influencers', class: 'btn btn-primary' %>
-<% end %>
+    <%= form_for @import, url: import_influencers_path, multipart: true do |f| %>
+      <% if @import.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <% @import.errors.full_messages.each do |msg| %>
+            <div><%= msg %></div>
+          <% end %>
+        </div>
+      <% end %>
+      <%= f.file_field :file %>
+      <%= f.submit 'Upload Influencers', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
