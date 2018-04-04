@@ -1,0 +1,2 @@
+first_name,last_name,address1,address2,city,state,zip,email,phone,bra_size,top_size,bottom_size,sports_jacket_size,collection_id,shipping_method_requested
+test        ,       Yudkin       ,          5553-B Bandini Blvd       ,,       Bell  ,      CA   ,90201,      tester1@gmail.com      ,,    M    ,     M    ,     M     ,     M     ,5304844306,

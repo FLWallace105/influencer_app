@@ -28,7 +28,7 @@ class InfluencerOrder < ApplicationRecord
   end
 
   def self.name_csv
-    "TEST_Orders_#{Time.current.strftime('%Y_%m_%d_%H_%M_%S_%L')}.csv"
+    "Orders_#{Time.current.strftime('%Y_%m_%d_%H_%M_%S_%L')}.csv"
   end
 
   CSV_DATE_FMT = '%m/%d/%Y %H:%M'.freeze

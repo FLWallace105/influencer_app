@@ -18,7 +18,7 @@ class InfluencerOrder::Creator
         if influencer_order.save
           @created_count += 1
         else
-          errors.add(:base, "#{influencer.email} - #{influencer_order.errors.full_messages.join(',')}")
+          errors.add(:base, "#{influencer.email} - #{influencer_order.errors.full_messages.join(', ')}")
         end
       end
     end
