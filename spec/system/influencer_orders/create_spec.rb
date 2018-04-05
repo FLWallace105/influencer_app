@@ -233,15 +233,16 @@ RSpec.describe "Influencer Orders Create" do
 
     it 'does not create orders when at least one order was already created this month' do
       custom_collection = create(:custom_collection, :with_five_products)
-      influencer = create(
-        :influencer,
-        collection_id: custom_collection.id,
-        top_size: 'S',
-        bottom_size: 'M',
-        bra_size: 'XL'
-      )
+
       Timecop.freeze(Time.zone.now.beginning_of_month) do
-        InfluencerOrder.create(name: 'the name', shipping_address: 'the shipping address', line_item: 'the line item', influencer: influencer)
+        create(
+          :influencer,
+          :with_order,
+          collection_id: custom_collection.id,
+          top_size: 'S',
+          bottom_size: 'M',
+          bra_size: 'XL'
+        )
       end
 
       Timecop.return

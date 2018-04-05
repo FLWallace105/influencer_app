@@ -5,7 +5,7 @@ class InfluencerOrdersController < ApplicationController
 
   def create
     @influencer_order_creator = InfluencerOrder::Creator.new
-
+  
     if InfluencerOrder.where("created_at >= ?", Time.zone.now.beginning_of_month).any?
       flash[:danger] = 'Influencer orders were already created this month.'
       redirect_to new_influencer_order_path
@@ -27,7 +27,7 @@ class InfluencerOrdersController < ApplicationController
 
     if orders.any?
       csv_file_name = InfluencerOrder.create_csv(orders)
-      UploadInfluencerOrdersJob.perform_later(csv_file_name)
+      EllieFTP.new.upload_orders_csv(csv_file_name)
 
       flash[:success] = "#{orders.pluck(:name).uniq.count} orders were sent to the warehouse."
       InfluencerOrder.where(id: orders.pluck(:id)).update_all(uploaded_at: Time.current)

@@ -5,6 +5,7 @@ class InfluencerOrder < ApplicationRecord
 
   validates_presence_of :name
   validates_presence_of :shipping_address
+  validates_presence_of :billing_address
   validates_presence_of :line_item
 
    ORDER_NUMBER_CHARACTERS = [('a'..'z').to_a, ('A'..'Z').to_a, ('0'..'9').to_a].flatten.to_a.freeze
@@ -28,7 +29,7 @@ class InfluencerOrder < ApplicationRecord
   end
 
   def self.name_csv
-    "Orders_#{Time.current.strftime('%Y_%m_%d_%H_%M_%S_%L')}.csv"
+    "TEST_Orders_#{Time.current.strftime('%Y_%m_%d_%H_%M_%S_%L')}.csv"
   end
 
   CSV_DATE_FMT = '%m/%d/%Y %H:%M'.freeze

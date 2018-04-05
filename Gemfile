@@ -57,6 +57,7 @@ group :test do
   gem 'selenium-webdriver', '~> 3.11'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
   gem 'database_cleaner', '~> 1.6', '>= 1.6.2'
+  gem 'fake_ftp', '~> 0.3.0'
 end
 
 group :production do
