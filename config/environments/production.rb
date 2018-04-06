@@ -101,7 +101,7 @@ Rails.application.configure do
     :authentication => :plain,
     :user_name      => 'apikey',
     :password       => ENV['SENDGRID_API_KEY'],
-    :domain         => 'ec2-35-173-221-56.compute-1.amazonaws.com',
+    :domain         => '',
     :enable_starttls_auto => true
   }
 end
