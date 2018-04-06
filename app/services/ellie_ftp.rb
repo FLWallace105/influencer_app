@@ -49,15 +49,7 @@ class EllieFTP < Net::FTP
       end
     end
 
-    # move the processed file to the archive
-    begin
-      puts "Archiving #{path} on FTP server"
-      pathname = Pathname.new path
-      rename(path, pathname.dirname + 'Archive' + pathname.basename)
-    rescue Net::FTPPermError => e
-      puts 'Archive file exists already or cannot be overwritten. Removing original.'
-      ftp.delete path
-    end
+    move_file_to_archive(path)
   end
 
   def get_tracking_csv(remote_file)
@@ -70,6 +62,7 @@ class EllieFTP < Net::FTP
   def format_file_to_string(remote_file)
     output = ""
     get(remote_file) { |data| output += data }
+    File.delete(remote_file)
     output
   end
 
@@ -77,5 +70,17 @@ class EllieFTP < Net::FTP
     csv = CSV.parse(data).map { |line| line.map(&:strip) }
     headers = csv.shift
     csv.map { |line| headers.zip(line).to_h }
+  end
+
+  def move_file_to_archive(path)
+    begin
+      puts "Archiving #{path} on FTP server"
+      pathname = Pathname.new path
+      rename(path, pathname.dirname + 'Archive' + pathname.basename)
+    rescue Net::FTPPermError => e
+      puts e
+      puts 'Archive file exists already or cannot be overwritten. Removing original.'
+      delete path
+    end
   end
 end

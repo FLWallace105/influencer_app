@@ -237,5 +237,21 @@ RSpec.describe "Influencers Import" do
       expect_to_see 'There were errors with your CSV file. Imported 1 influencer. Updated 0 influencers.'
       expect_to_see 'Line 3 - tester2@gmail.com, Shipping address must be unique.'
     end
+
+    it 'does not create an influencer when one already exists with the same shipping address even if the csv has whitespace in the address data' do
+      user = create(:user)
+      visit new_user_session_path
+      login(user)
+      within '#influencers_dropdown' do
+        click_on 'Influencers'
+      end
+      click_on 'Upload CSV'
+      attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/two_influencers_with_identical_shipping_addresses_one_with_whitespace.csv")
+      click_on 'Upload Influencers'
+
+      expect(Influencer.count).to eq 1
+      expect_to_see 'There were errors with your CSV file. Imported 1 influencer. Updated 0 influencers.'
+      expect_to_see 'Line 3 - tester2@gmail.com, Shipping address must be unique.'
+    end
   end
 end

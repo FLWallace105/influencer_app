@@ -1,1 +1,1 @@
-This is a Rails rebuild of [this Sinatra app](https://github.com/FLWallace105/influencer_order_processing "this influencer order processing app") which processes influencer orders for [ellie.com](http://https://www.ellie.com/ "ellie.com").
+This is a Rails rebuild of [this Sinatra app](https://github.com/FLWallace105/influencer_order_processing "this influencer order processing app") which processes influencer orders for [ellie.com](https://www.ellie.com/ "ellie.com").
