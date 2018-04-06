@@ -1,25 +1,81 @@
 class EllieFTP < Net::FTP
-  attr_accessor :host, :username, :password, :debug
-
   def initialize
-    options = {}
-    @username = ENV['ELLIE_FTP_USERNAME']
-    @password = ENV['ELLIE_FTP_PASSWORD']
-    @host = ENV['ELLIE_FTP_HOST']
-    @debug = true
-    options[:username] = @username
-    options[:password] = @password
-    options[:debug_mode] = @debug
-    super(@host, options)
+    super
+    connect(ENV['ELLIE_FTP_HOST'], ENV['ELLIE_FTP_PORT'])
+    login(ENV['ELLIE_FTP_USERNAME'], ENV['ELLIE_FTP_PASSWORD'])
   end
 
   def upload_orders_csv(file)
     directory = '/EllieInfluencer/ReceiveOrder'
-    puts "Starting orders csv upload of #{file} to #{directory} on #{@host}"
+    puts "Starting orders csv upload of #{file} to #{directory} on #{ENV['ELLIE_FTP_HOST']}"
     chdir directory
     put(File.open(file))
     close
     File.delete(file)
     puts 'Successfully uploaded CSV'
+  end
+
+  def pull_order_tracking
+    directory = '/EllieInfluencer/SendOrder'
+    puts "Polling tracking FTP server: #{directory}"
+    chdir directory
+    # in production match against: ORDERTRK
+    mlsd.select { |entry| entry.type == 'file' && /TEST/.match?(entry.pathname) }.each do |entry|
+      puts "Found #{entry.pathname}"
+      process_tracking_csv(entry.pathname)
+    end
+  end
+
+  def process_tracking_csv(path)
+    puts "Starting Tracking CSV processing of #{path}"
+    tracking_data = get_tracking_csv(path)
+
+    # add all influencer lines to the database
+    # send an email if one has not been sent already
+    tracking_data.select { |line| /^#IN/ =~ line['fulfillment_line_item_id'] }.each do |tracking_line|
+      begin
+        tracking = InfluencerTracking.find_or_initialize_by(
+          order_name: tracking_line['fulfillment_line_item_id']
+        )
+        tracking.update(carrier: tracking_line['carrier'], tracking_number: tracking_line['tracking_1'])
+
+        unless tracking.email_sent?
+          puts "Sending tracking email to #{tracking.influencer.email}"
+          InfluencerTrackingMailer.send_tracking_info(tracking).deliver_now
+        end
+      rescue ActiveRecord::RecordNotFound => e
+        puts e
+        next
+      end
+    end
+
+    # move the processed file to the archive
+    begin
+      puts "Archiving #{path} on FTP server"
+      pathname = Pathname.new path
+      rename(path, pathname.dirname + 'Archive' + pathname.basename)
+    rescue Net::FTPPermError => e
+      puts 'Archive file exists already or cannot be overwritten. Removing original.'
+      ftp.delete path
+    end
+  end
+
+  def get_tracking_csv(remote_file)
+    parse_tracking_csv(format_file_to_string(remote_file))
+  end
+
+  private
+
+  # Retrieves a file and returns the contents as a string
+  def format_file_to_string(remote_file)
+    output = ""
+    get(remote_file) { |data| output += data }
+    output
+  end
+
+  def parse_tracking_csv(data)
+    csv = CSV.parse(data).map { |line| line.map(&:strip) }
+    headers = csv.shift
+    csv.map { |line| headers.zip(line).to_h }
   end
 end

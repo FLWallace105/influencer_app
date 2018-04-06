@@ -55,14 +55,14 @@ ActiveRecord::Schema.define(version: 20180327185814) do
     t.index ["name"], name: "index_influencer_orders_on_name"
   end
 
-  create_table "influencer_tracking", force: :cascade do |t|
+  create_table "influencer_trackings", force: :cascade do |t|
     t.string "order_name", null: false
     t.string "carrier"
     t.string "tracking_number"
     t.datetime "email_sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_name"], name: "index_influencer_tracking_on_order_name"
+    t.index ["order_name"], name: "index_influencer_trackings_on_order_name"
   end
 
   create_table "influencers", force: :cascade do |t|

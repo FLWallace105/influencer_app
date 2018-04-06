@@ -4,12 +4,12 @@ FactoryBot.define do
     trait :with_collection_and_variants do
       after(:create) do |product|
         custom_collection = create(:custom_collection)
-        FactoryBot.create(:collect, collection: custom_collection, product: product )
-        FactoryBot.create(:product_variant, :xs, product: product)
-        FactoryBot.create(:product_variant, :s, product: product)
-        FactoryBot.create(:product_variant, :m, product: product)
-        FactoryBot.create(:product_variant, :l, product: product)
-        FactoryBot.create(:product_variant, :xl, product: product)
+        create(:collect, collection: custom_collection, product: product )
+        create(:product_variant, :xs, product: product)
+        create(:product_variant, :s, product: product)
+        create(:product_variant, :m, product: product)
+        create(:product_variant, :l, product: product)
+        create(:product_variant, :xl, product: product)
       end
     end
 
