@@ -101,8 +101,14 @@
         </tr>
       <% end %>
     </table>
-    <%= submit_tag("Create Influencer Orders", formaction: influencer_orders_path, "data-confirm" => "Are you sure you want to send orders to the warehouse?", class: 'btn btn-primary') %>
-    <%= submit_tag("Create Orders For All Influencers in the Database", name: :create_orders_for_all_influencers_in_database, formaction: influencer_orders_path, "data-confirm" => "Are you sure you want to send orders to the warehouse?", class: 'btn btn-primary pull-right') %>
+    <%= submit_tag("Create Influencer Orders", formaction: influencer_orders_path,
+                   "data-confirm" => "Are you sure you want to send orders to the warehouse?",
+                   class: 'btn btn-primary') %>
+    <%= submit_tag("Create Orders For All Influencers in the Database",
+                   name: :create_orders_for_all_influencers_in_database,
+                   formaction: influencer_orders_path,
+                   "data-confirm" => "Are you sure you want to send orders to the warehouse?",
+                   class: 'btn btn-danger pull-right') %>
   </div>
 </div>
 
