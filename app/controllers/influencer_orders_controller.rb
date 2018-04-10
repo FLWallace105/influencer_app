@@ -16,6 +16,10 @@ class InfluencerOrdersController < ApplicationController
     end
   end
 
+  def create_once_a_month
+    raise 'd'
+  end
+
   def upload
     orders = InfluencerOrder.where(uploaded_at: nil).order(:name)
 
@@ -37,10 +41,12 @@ class InfluencerOrdersController < ApplicationController
   private
 
   def check_box_params
-    if params[:create_orders_for_all_influencers_in_database].present?
+    if params[:create_once_a_month]
+      :create_once_a_month
+    elsif params[:create_orders_for_all_influencers_in_database]
       :select_all_in_database
-    else
-      params.permit(influencers: []) if params[:influencers]
+    elsif params[:influencers]
+      params.permit(influencers: [])
     end
   end
 end

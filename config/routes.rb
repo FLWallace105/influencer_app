@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       collection do
         post :upload
         post :create
+        post :create_once_a_month
       end
     end
 

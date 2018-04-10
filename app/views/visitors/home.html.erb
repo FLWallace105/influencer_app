@@ -1,25 +1,19 @@
 <h1 class="text-center">How To Use This App </h1>
 
-<h4>Danger Zone > Refresh Everything</h4>
-<p>
-  Only use this section if you have talked to the dev team and you know what
-  you are doing. When in doubt always choose to refresh everything.
-</p>
-
 <h4>Influencers > Upload CSV </h4>
-<p>
+<p class='alert alert-info'>
   This saves influencers from a csv file to the database. Influencers that
   already exist will be updated.
 </p>
 
 <h4> Influencers > View Influencers </h4>
-<p>
+<p class='alert alert-info'>
   Page through all the influencers in the app. You can also search by email or
   last name here.
 </p>
 
 <h4> Influencers > View Influencers > Create This Month's Influencer Orders </h4>
-<p>
+<p class='alert alert-success'>
   After uploading all the csv's for the month, this will create orders for all
   the influencers that were either created or updated this month. To prevent
   duplicate orders from being created, this can only be done once a month so make
@@ -27,8 +21,14 @@
   should be your default workflow.
 </p>
 
+<h4> Orders > Send Influencer Orders to Warehouse </h4>
+<p class='alert alert-info'>
+  This will grab all the orders in the database that have not been sent to the
+  warehouse yet and then it will send them to the warehouse.
+</p>
+
 <h4> Influencers > View Influencers > Create Influencer Orders </h4>
-<p>
+<p class='alert alert-danger'>
   Use this button with CAUTION since it allows for potentially creating duplicate
   orders. In case you need to create additinoal orders after you have clicked the
   'Create This Month's Influencer Orders' button, you may select influencers
@@ -38,15 +38,15 @@
 </p>
 
 <h4> Influencers > View Influencers > Create Orders For All Influencers In The Database </h4>
-<p>
+<p class='alert alert-danger'>
   Use this button with EXTREME CAUTION since it opens up the greatest possibility
   to create duplicate orders. If influencers exist that were not updated this month,
   this button will create orders for them for the last collection (whatever it was)
   the database has stored for them.
 </p>
 
-<h4> Orders > Send Influencer Orders to Warehouse </h4>
-<p>
-  This will grab all the orders in the database that have not been sent to the
-  warehouse yet and then it will send them to the warehouse.
+<h4>Danger Zone > Refresh Everything</h4>
+<p class='alert alert-danger'>
+  Only use this section if you have talked to the dev team and you know what
+  you are doing. When in doubt always choose to refresh everything.
 </p>
