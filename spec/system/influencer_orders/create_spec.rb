@@ -201,6 +201,42 @@ RSpec.describe "Influencer Orders Create" do
         expect_to_see '120 products queued to ship.'
         expect(InfluencerOrder.count).to eq 120
       end
+
+      it 'creates orders for the correct influencers' do
+        influencer1 = create(
+          :influencer,
+          :with_collection
+        )
+        create(
+          :influencer,
+          :with_collection
+        )
+        influencer3 = create(
+          :influencer,
+          :with_collection
+        )
+        create(
+          :influencer,
+          :with_collection
+        )
+        user = create(:user)
+
+        visit new_user_session_path
+        login(user)
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
+        end
+        click_on 'View Influencers'
+        find(:css, "#influencers_[value='#{influencer1.id}']").set(true)
+        find(:css, "#influencers_[value='#{influencer3.id}']").set(true)
+        click_on 'Create Influencer Orders'
+        # page.accept_alert # required if you run the test with javascript enabled
+
+        expect_to_see '6 products queued to ship.'
+        expect(InfluencerOrder.count).to eq 6
+        expect(Influencer.find(influencer1.id).orders.count).to eq 3
+        expect(Influencer.find(influencer3.id).orders.count).to eq 3
+      end
     end
   end
 
