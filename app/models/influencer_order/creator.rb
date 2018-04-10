@@ -4,7 +4,9 @@ class InfluencerOrder::Creator
   attr_reader :influencers
 
   def initialize(params)
-    if params == :select_all_in_database
+    if params == :create_once_a_month
+      @influencers = Influencer.where("updated_at >= ?", Time.zone.now.beginning_of_month)
+    elsif params == :select_all_in_database
       @influencers = Influencer.all
     else
       influencer_ids = params[:influencers]

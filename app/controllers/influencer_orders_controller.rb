@@ -17,7 +17,23 @@ class InfluencerOrdersController < ApplicationController
   end
 
   def create_once_a_month
-    raise 'd'
+    @influencer_order_creator = InfluencerOrder::Creator.new(check_box_params)
+    @influencers = @influencer_order_creator.influencers.page(params[:page]).per(100)
+
+    if InfluencerOrder.where("created_at >= ?", Time.zone.now.beginning_of_month).any?
+      flash[:danger] = 'Influencer orders were already created this month.'
+      redirect_to influencers_path
+    elsif @influencer_order_creator.save
+      flash[:success] =
+        "#{@influencer_order_creator.created_count}
+        #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
+      redirect_to influencers_path
+    else
+      flash.now[:danger] =
+        "Uh oh. Something went wrong. #{@influencer_order_creator.created_count}
+        #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
+      render :create
+    end
   end
 
   def upload
