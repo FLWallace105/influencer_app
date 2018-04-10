@@ -4,16 +4,18 @@ RSpec.describe "Influencer Orders Create" do
     describe 'successfully creates influencer orders' do
       it 'creates one influencer order' do
         product = create(:product, :leggings, :with_collection_and_variants)
-        create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
+        influencer = create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
         user = create(:user)
 
         visit new_user_session_path
         login(user)
-        within '#orders_dropdown' do
-          click_on 'Orders'
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
         end
-        click_on 'New Influencer Orders'
+        click_on 'View Influencers'
+        find(:css, "#influencers_[value='#{influencer.id}']").set(true)
         click_on 'Create Influencer Orders'
+        # page.accept_alert # required if you run the test with javascript enabled
 
         expect_to_see '1 product queued to ship.'
         expect(InfluencerOrder.count).to eq 1
@@ -21,7 +23,7 @@ RSpec.describe "Influencer Orders Create" do
 
       it 'creates three influencer orders' do
         custom_collection = create(:custom_collection, :with_three_products)
-        create(
+        influencer = create(
           :influencer,
           collection_id: custom_collection.id,
           top_size: 'S',
@@ -32,26 +34,48 @@ RSpec.describe "Influencer Orders Create" do
 
         visit new_user_session_path
         login(user)
-        within '#orders_dropdown' do
-          click_on 'Orders'
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
         end
-        click_on 'New Influencer Orders'
+        click_on 'View Influencers'
+        find(:css, "#influencers_[value='#{influencer.id}']").set(true)
         click_on 'Create Influencer Orders'
+        # page.accept_alert # required if you run the test with javascript enabled
 
         expect_to_see '3 products queued to ship.'
         expect(InfluencerOrder.count).to eq 3
       end
 
+      it 'shows the influencers in the influencers index page' do
+        product = create(:product, :leggings, :with_collection_and_variants)
+        influencer = create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
+        user = create(:user)
+
+        visit new_user_session_path
+        login(user)
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
+        end
+        click_on 'View Influencers'
+        find(:css, "#influencers_[value='#{influencer.id}']").set(true)
+        click_on 'Create Influencer Orders'
+        # page.accept_alert # required if you run the test with javascript enabled
+
+        expect_to_see influencer.first_name
+        expect_to_see influencer.address1
+        expect_to_see influencer.state
+      end
+
       it 'creates the same order name for all orders belonging to an influencer and different order names for each influencer' do
         custom_collection = create(:custom_collection, :with_three_products)
-        create(
+        influencer1 = create(
           :influencer,
           collection_id: custom_collection.id,
           top_size: 'S',
           bottom_size: 'M',
           bra_size: 'XL'
         )
-        create(
+        influencer2 = create(
           :influencer,
           collection_id: custom_collection.id,
           top_size: 'S',
@@ -62,11 +86,14 @@ RSpec.describe "Influencer Orders Create" do
 
         visit new_user_session_path
         login(user)
-        within '#orders_dropdown' do
-          click_on 'Orders'
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
         end
-        click_on 'New Influencer Orders'
+        click_on 'View Influencers'
+        find(:css, "#influencers_[value='#{influencer1.id}']").set(true)
+        find(:css, "#influencers_[value='#{influencer2.id}']").set(true)
         click_on 'Create Influencer Orders'
+        # page.accept_alert # required if you run the test with javascript enabled
         first_order_group = InfluencerOrder.where(influencer: Influencer.first)
         second_order_group = InfluencerOrder.where(influencer: Influencer.second)
 
@@ -79,7 +106,7 @@ RSpec.describe "Influencer Orders Create" do
 
       it 'creates five influencer orders' do
         custom_collection = create(:custom_collection, :with_five_products)
-        create(
+        influencer = create(
           :influencer,
           collection_id: custom_collection.id,
           top_size: 'S',
@@ -90,11 +117,13 @@ RSpec.describe "Influencer Orders Create" do
 
         visit new_user_session_path
         login(user)
-        within '#orders_dropdown' do
-          click_on 'Orders'
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
         end
-        click_on 'New Influencer Orders'
+        click_on 'View Influencers'
+        find(:css, "#influencers_[value='#{influencer.id}']").set(true)
         click_on 'Create Influencer Orders'
+        # page.accept_alert # required if you run the test with javascript enabled
 
         expect_to_see '5 products queued to ship.'
         expect(InfluencerOrder.count).to eq 5
@@ -102,7 +131,7 @@ RSpec.describe "Influencer Orders Create" do
 
       specify 'each order is for a different product' do
         custom_collection = create(:custom_collection, :with_five_products)
-        create(
+        influencer = create(
           :influencer,
           collection_id: custom_collection.id,
           top_size: 'S',
@@ -113,160 +142,97 @@ RSpec.describe "Influencer Orders Create" do
 
         visit new_user_session_path
         login(user)
-        within '#orders_dropdown' do
-          click_on 'Orders'
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
         end
-        click_on 'New Influencer Orders'
+        click_on 'View Influencers'
+        find(:css, "#influencers_[value='#{influencer.id}']").set(true)
         click_on 'Create Influencer Orders'
+        # page.accept_alert # required if you run the test with javascript enabled
 
         expect(InfluencerOrder.all.pluck(:line_item).map { |line_item| line_item["product_id"] }.uniq.count).to eq 5
       end
 
-      it 'creates orders when an influencer was created last month and then updated this month' do
-        custom_collection = create(:custom_collection, :with_three_products)
-        Timecop.freeze(1.month.ago.end_of_month) do
-          create(
-            :influencer,
-            collection_id: custom_collection.id,
-            top_size: 'S',
-            bottom_size: 'M',
-            bra_size: 'XL'
-          )
+      it 'creates orders for every influencer on the page when the SelectAll checkbox is checked', :js do
+        # This test assumes only 100 influencers are shown per page.
+        # It also requires javascript to be turned on.
+
+        product = create(:product, :leggings, :with_collection_and_variants)
+        120.times do
+          create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
         end
-        Timecop.return
-        Influencer.first.update(top_size: 'M')
+
         user = create(:user)
 
         visit new_user_session_path
         login(user)
-        within '#orders_dropdown' do
-          click_on 'Orders'
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
         end
-        click_on 'New Influencer Orders'
+        click_on 'View Influencers'
+        find(:css, "#Select_All").set(true)
         click_on 'Create Influencer Orders'
-
-        expect_to_see '3 products queued to ship.'
-        expect(InfluencerOrder.count).to eq 3
+        page.accept_alert
+        sleep 2
+        expect_to_see '100 products queued to ship.'
+        expect(InfluencerOrder.count).to eq 100
       end
 
-      it 'creates orders at the end of the month when an influencer was created in the begining of the month' do
-        custom_collection = create(:custom_collection, :with_three_products)
-        Timecop.freeze(Date.today.beginning_of_month) do
-          create(
-            :influencer,
-            collection_id: custom_collection.id,
-            top_size: 'S',
-            bottom_size: 'M',
-            bra_size: 'XL'
-          )
-        end
-        Timecop.return
-        Timecop.freeze(Date.today.end_of_month) do
-          user = create(:user)
+      it 'creates orders for every influencer in the database when the Create Orders For All Influencers in the Database button is clicked' do
+        # This test assumes only 100 influencers are shown per page.
 
-          visit new_user_session_path
-          login(user)
-          within '#orders_dropdown' do
-            click_on 'Orders'
-          end
-          click_on 'New Influencer Orders'
-          click_on 'Create Influencer Orders'
-
-          expect_to_see '3 products queued to ship.'
-          expect(InfluencerOrder.count).to eq 3
+        product = create(:product, :leggings, :with_collection_and_variants)
+        120.times do
+          create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
         end
-        Timecop.return
+
+        user = create(:user)
+
+        visit new_user_session_path
+        login(user)
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
+        end
+        click_on 'View Influencers'
+
+        click_on 'Create Orders For All Influencers in the Database'
+        # page.accept_alert # required if you run the test with javascript enabled
+        # sleep 2
+        expect_to_see '120 products queued to ship.'
+        expect(InfluencerOrder.count).to eq 120
       end
     end
   end
 
   describe 'unsuccessfully creates influencer orders' do
-    it 'does not create orders for influencers that were not updated this month or created this month' do
-      custom_collection = create(:custom_collection, :with_three_products)
-      Timecop.freeze(1.month.ago.end_of_month) do
-        create(
-          :influencer,
-          collection_id: custom_collection.id,
-          top_size: 'S',
-          bottom_size: 'M',
-          bra_size: 'XL'
-        )
-      end
-      Timecop.return
-
-      user = create(:user)
-
-      visit new_user_session_path
-      login(user)
-      within '#orders_dropdown' do
-        click_on 'Orders'
-      end
-      click_on 'New Influencer Orders'
-      click_on 'Create Influencer Orders'
-
-      expect_to_see '0 products queued to ship.'
-      expect(InfluencerOrder.count).to eq 0
-    end
-
     # WARNING: I shouldn't be using a stub below. The purpose of system/integration tests
     # is to test the whole system, whereas the purpose of mocks/stubs/spies is
     # to isolate parts of the system. If you use them in system/integration tests, then
     # strange, hard to debug, bugs can occur.
     it 'shows the email of the influencer whose order failed to be created along with the error message' do
       product = create(:product, :leggings, :with_collection_and_variants)
-      create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
+      influencer = create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
       Influencer.any_instance.stub(:shipping_address).and_return(nil)
       user = create(:user)
 
       visit new_user_session_path
       login(user)
-      within '#orders_dropdown' do
-        click_on 'Orders'
+      within '#influencers_dropdown' do
+        click_on 'Influencers'
       end
-      click_on 'New Influencer Orders'
+      click_on 'View Influencers'
+      find(:css, "#influencers_[value='#{influencer.id}']").set(true)
       click_on 'Create Influencer Orders'
+      # page.accept_alert # required if you run the test with javascript enabled
 
       expect_to_see '0 products queued to ship.'
       expect(InfluencerOrder.count).to eq 0
       expect_to_see("#{Influencer.first.email} - Shipping address can't be blank")
-    end
+      "0 products queued to ship."
 
-    it 'does not create orders when at least one order was already created this month' do
-      custom_collection = create(:custom_collection, :with_five_products)
-
-      Timecop.freeze(Time.zone.now.beginning_of_month) do
-        create(
-          :influencer,
-          :with_order,
-          collection_id: custom_collection.id,
-          top_size: 'S',
-          bottom_size: 'M',
-          bra_size: 'XL'
-        )
-      end
-
-      Timecop.return
-      create(
-        :influencer,
-        collection_id: custom_collection.id,
-        top_size: 'S',
-        bottom_size: 'M',
-        bra_size: 'XL'
-      )
-      user = create(:user)
-      Timecop.freeze(Time.zone.now.end_of_month) do
-        visit new_user_session_path
-        login(user)
-        within '#orders_dropdown' do
-          click_on 'Orders'
-        end
-        click_on 'New Influencer Orders'
-        click_on 'Create Influencer Orders'
-
-        expect_to_see 'Influencer orders were already created this month.'
-        expect(InfluencerOrder.count).to eq 1
-      end
-      Timecop.return
+      expect_to_see influencer.first_name
+      expect_to_see influencer.address1
+      expect_to_see influencer.state
     end
   end
 end

@@ -1,24 +1,18 @@
 class InfluencerOrdersController < ApplicationController
-  def new
-    @influencer_order_creator = InfluencerOrder::Creator.new
-  end
-
   def create
-    @influencer_order_creator = InfluencerOrder::Creator.new
-  
-    if InfluencerOrder.where("created_at >= ?", Time.zone.now.beginning_of_month).any?
-      flash[:danger] = 'Influencer orders were already created this month.'
-      redirect_to new_influencer_order_path
-    elsif @influencer_order_creator.save
+    @influencer_order_creator = InfluencerOrder::Creator.new(check_box_params)
+    @influencers = @influencer_order_creator.influencers.page(params[:page]).per(100)
+
+    if @influencer_order_creator.save
       flash[:success] =
         "#{@influencer_order_creator.created_count}
         #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
-      redirect_to new_influencer_order_path
+      redirect_to influencers_path
     else
       flash.now[:danger] =
         "Uh oh. Something went wrong. #{@influencer_order_creator.created_count}
         #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
-      render new_influencer_order_path
+      render :create
     end
   end
 
@@ -38,5 +32,15 @@ class InfluencerOrdersController < ApplicationController
   end
 
   def index
+  end
+
+  private
+
+  def check_box_params
+    if params[:create_orders_for_all_influencers_in_database].present?
+      :select_all_in_database
+    else
+      params.permit(influencers: []) if params[:influencers]
+    end
   end
 end

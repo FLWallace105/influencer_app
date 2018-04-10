@@ -1,10 +1,21 @@
 class InfluencerOrder::Creator
   include ActiveModel::Model
   attr_accessor :created_count
+  attr_reader :influencers
+
+  def initialize(params)
+    if params == :select_all_in_database
+      @influencers = Influencer.all
+    else
+      influencer_ids = params[:influencers]
+      @influencers = Influencer.where(id: influencer_ids)
+    end
+  end
 
   def process!
     @created_count = 0
-    Influencer.where("updated_at >= ?", Time.zone.now.beginning_of_month).each do |influencer|
+
+    @influencers.each do |influencer|
       order_number = InfluencerOrder.generate_order_number
 
       influencer.sized_variants_from_collection.each do |variant|

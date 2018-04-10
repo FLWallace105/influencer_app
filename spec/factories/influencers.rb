@@ -21,5 +21,12 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :with_collection do
+      after(:build) do |influencer|
+        custom_collection = create(:custom_collection, :with_three_products)
+        influencer.collection_id = custom_collection.id
+      end
+    end
   end
 end

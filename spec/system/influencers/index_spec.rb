@@ -5,6 +5,7 @@ RSpec.describe "Influencers Index" do
     describe 'visit the influencers index page' do
       it 'does not show any influencers' do
         visit root_path
+        # expect something
       end
     end
   end

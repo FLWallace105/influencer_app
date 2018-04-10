@@ -20,12 +20,14 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :influencer_orders, only: [:index, :new] do
+    resources :influencer_orders, only: [:index] do
       collection do
         post :upload
         post :create
       end
     end
+
+    get '/influencers/search', to: 'influencers#search', as: 'influencers_search'
   end
 
   mount Resque::Server, at: '/jobs'
