@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   authenticated do
-    resources :influencers, only: [:index, :new, :edit, :update] do
+    resources :influencers, only: [:index, :new, :create, :edit, :update] do
       collection do
         post :import
         post :mark_active, controller: :influencers_status

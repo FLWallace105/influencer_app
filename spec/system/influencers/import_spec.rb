@@ -9,7 +9,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
         click_on 'Upload Influencers'
 
@@ -24,7 +24,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
         click_on 'Upload Influencers'
         expect(InfluencerOrder.count).to eq 0
@@ -39,7 +39,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/three_valid_influencers.csv")
         click_on 'Upload Influencers'
         expect(Influencer.count).to eq 3
@@ -54,7 +54,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
         click_on 'Upload Influencers'
         first_updated_at_value = Influencer.first.updated_at
@@ -62,7 +62,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
         click_on 'Upload Influencers'
 
@@ -76,7 +76,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
         click_on 'Upload Influencers'
         Influencer.first.update(active: false)
@@ -84,7 +84,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
         click_on 'Upload Influencers'
 
@@ -98,7 +98,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/influencer_with_downcased_sizes.csv")
         click_on 'Upload Influencers'
 
@@ -113,7 +113,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/influencer_with_downcased_sizes.csv")
         click_on 'Upload Influencers'
 
@@ -132,7 +132,7 @@ RSpec.describe "Influencers Import" do
         within '#influencers_dropdown' do
           click_on 'Influencers'
         end
-        click_on 'Upload CSV'
+        click_on 'New Influencers'
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_influencer_with_whitespace_in_columns.csv")
         click_on 'Upload Influencers'
 
@@ -157,7 +157,7 @@ RSpec.describe "Influencers Import" do
       within '#influencers_dropdown' do
         click_on 'Influencers'
       end
-      click_on 'Upload CSV'
+      click_on 'New Influencers'
       attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_influencer_with_whitespace_in_columns.csv")
       click_on 'Upload Influencers'
 
@@ -172,7 +172,7 @@ RSpec.describe "Influencers Import" do
       within '#influencers_dropdown' do
         click_on 'Influencers'
       end
-      click_on 'Upload CSV'
+      click_on 'New Influencers'
       attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_influencer_with_invalid_email.csv")
       click_on 'Upload Influencers'
 
@@ -187,7 +187,7 @@ RSpec.describe "Influencers Import" do
       within '#influencers_dropdown' do
         click_on 'Influencers'
       end
-      click_on 'Upload CSV'
+      click_on 'New Influencers'
       attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_invalid_influencer.csv")
       click_on 'Upload Influencers'
       expect(Influencer.count).to eq 0
@@ -203,7 +203,7 @@ RSpec.describe "Influencers Import" do
       within '#influencers_dropdown' do
         click_on 'Influencers'
       end
-      click_on 'Upload CSV'
+      click_on 'New Influencers'
       attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_and_two_invalid_influencers.csv")
       click_on 'Upload Influencers'
       expect(Influencer.count).to eq 1
@@ -220,7 +220,7 @@ RSpec.describe "Influencers Import" do
       within '#influencers_dropdown' do
         click_on 'Influencers'
       end
-      click_on 'Upload CSV'
+      click_on 'New Influencers'
       attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/influencer_with_invalid_sizes.csv")
       click_on 'Upload Influencers'
       expect(Influencer.count).to eq 0
@@ -236,7 +236,7 @@ RSpec.describe "Influencers Import" do
       within '#influencers_dropdown' do
         click_on 'Influencers'
       end
-      click_on 'Upload CSV'
+      click_on 'New Influencers'
       attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/two_influencers_with_identical_emails.csv")
       click_on 'Upload Influencers'
 
@@ -251,7 +251,7 @@ RSpec.describe "Influencers Import" do
       within '#influencers_dropdown' do
         click_on 'Influencers'
       end
-      click_on 'Upload CSV'
+      click_on 'New Influencers'
       attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/two_influencers_with_identical_shipping_addresses.csv")
       click_on 'Upload Influencers'
 
@@ -267,7 +267,7 @@ RSpec.describe "Influencers Import" do
       within '#influencers_dropdown' do
         click_on 'Influencers'
       end
-      click_on 'Upload CSV'
+      click_on 'New Influencers'
       attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/two_influencers_with_identical_shipping_addresses_one_with_whitespace.csv")
       click_on 'Upload Influencers'
 

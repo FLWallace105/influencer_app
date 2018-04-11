@@ -5,9 +5,11 @@ class InfluencersController < ApplicationController
 
   def new
     @import = Influencer::Import.new
+    @influencer = Influencer.new
   end
 
   def import
+    @influencer = Influencer.new
     @import = Influencer::Import.new(influencer_import_params)
     if @import.save
       flash[:success] =
@@ -23,6 +25,17 @@ class InfluencersController < ApplicationController
       Updated #{@import.updated_count}
       #{'influencer'.pluralize(@import.updated_count)}."
       render new_influencer_path
+    end
+  end
+
+  def create
+    @influencer = Influencer.new(influencer_params)
+
+    if @influencer.save(influencer_params)
+      redirect_to edit_influencer_path(@influencer), notice: "Successfully created #{@influencer.full_name}."
+    else
+      @import = Influencer::Import.new
+      render :new
     end
   end
 
@@ -58,8 +71,9 @@ class InfluencersController < ApplicationController
 
   def influencer_params
     params.require(:influencer).permit(
-      :first_name, :last_name, :active, :email, :phone, :bra_size, :top_size,
-      :bottom_size, :sports_jacket_size, :collection_id
+      :first_name, :last_name, :active, :address1, :address2, :city, :state,
+      :zip, :email, :phone, :bra_size, :top_size, :bottom_size, :sports_jacket_size,
+      :collection_id
     )
   end
 end
