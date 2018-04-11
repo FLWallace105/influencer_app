@@ -11,34 +11,9 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
          <% if user_signed_in? %>
-           <li class="dropdown">
-             <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-               Danger Zone
-               <span class="caret"></span>
-             </a>
-             <ul class="dropdown-menu" id="deals-dropdown">
-               <li>
-                 <%= link_to "Refresh Everything", refresh_all_shopify_cache_path, method: :put %>
-               </li>
-               <li>
-                 <%= link_to "Refresh Collections", '#' %>
-               </li>
-               <li>
-                 <%= link_to "Refresh Collects", '#' %>
-               </li>
-               <li>
-                 <%= link_to "Refresh Products", '#' %>
-               </li>
-               <li>
-                 <%= link_to "Refresh Orders", '#' %>
-               </li>
-               <li class="divider" role="separator"></li>
-               <li>
-                 <%= link_to "Delete All Influencers", '#' %>
-                 <%= link_to "Delete All Orders", '#' %>
-               </li>
-             </ul>
-           </li>
+         <li>
+           <%= link_to "Refresh Shopify Cache", refresh_all_shopify_cache_path, method: :put %>
+         </li>
           <li id='influencers_dropdown' class="dropdown">
             <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
               Influencers

@@ -11,7 +11,8 @@ FactoryBot.define do
     top_size ['XS', 'S', 'M', 'L', 'XL'].sample
     bottom_size ['XS', 'S', 'M', 'L', 'XL'].sample
     sports_jacket_size ['XS', 'S', 'M', 'L', 'XL'].sample
-
+    active true
+    
     trait :with_order do
       after(:create) do |influencer|
         create(

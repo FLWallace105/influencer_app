@@ -14,7 +14,7 @@ RSpec.describe "ShopifyCaches" do
         expect(Product.count).to eq(ShopifyAPI::Product.count)
         expect(CustomCollection.count).to eq(ShopifyAPI::CustomCollection.count)
         expect(Collect.count).to eq(ShopifyAPI::Collect.count)
-        expect_to_see 'Refreshing entire Shopify Cache'
+        expect_to_see 'Refreshing entire Shopify Cache. Please wait a couple mintues...'
       end
     end
   end

@@ -59,10 +59,10 @@ class InfluencerOrdersController < ApplicationController
   def check_box_params
     if params[:create_once_a_month]
       :create_once_a_month
-    elsif params[:create_orders_for_all_influencers_in_database]
-      :select_all_in_database
     elsif params[:influencers]
       params.permit(influencers: [])
+    else
+      params
     end
   end
 end

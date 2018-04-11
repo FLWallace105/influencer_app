@@ -69,6 +69,28 @@ RSpec.describe "Influencers Import" do
         expect(Influencer.first.updated_at).not_to eq first_updated_at_value
       end
 
+      it 'updates the active column to true when importing an influencer that already exists the database.' do
+        user = create(:user)
+        visit new_user_session_path
+        login(user)
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
+        end
+        click_on 'Upload CSV'
+        attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
+        click_on 'Upload Influencers'
+        Influencer.first.update(active: false)
+
+        within '#influencers_dropdown' do
+          click_on 'Influencers'
+        end
+        click_on 'Upload CSV'
+        attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
+        click_on 'Upload Influencers'
+
+        expect(Influencer.first.active?).to be true
+      end
+
       it 'creates influencers when the sizes are downcased' do
         user = create(:user)
         visit new_user_session_path

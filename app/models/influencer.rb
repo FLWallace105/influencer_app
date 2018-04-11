@@ -14,6 +14,7 @@ class Influencer < ApplicationRecord
   validates_inclusion_of :bottom_size, :in => ['XS', 'S', 'M', 'L', 'XL']
   validates_inclusion_of :sports_jacket_size, :in => ['XS', 'S', 'M', 'L', 'XL']
   validates_presence_of :collection_id
+  validates_inclusion_of :active, in: [true, false]
   validates_uniqueness_of :email
   validates :email, email: true
   validate :unique_shipping_address

@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     resources :influencers, only: [:index, :new, :edit, :update] do
       collection do
         post :import
-        post :delete
+        post :mark_active, controller: :influencers_status
+        post :mark_inactive, controller: :influencers_status
+        post :download, controller: :influencers_download
       end
     end
 

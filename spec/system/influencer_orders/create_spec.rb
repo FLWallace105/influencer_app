@@ -178,30 +178,6 @@ RSpec.describe "Influencer Orders Create" do
         expect(InfluencerOrder.count).to eq 100
       end
 
-      it 'creates orders for every influencer in the database when the Create Orders For All Influencers in the Database button is clicked' do
-        # This test assumes only 100 influencers are shown per page.
-
-        product = create(:product, :leggings, :with_collection_and_variants)
-        120.times do
-          create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
-        end
-
-        user = create(:user)
-
-        visit new_user_session_path
-        login(user)
-        within '#influencers_dropdown' do
-          click_on 'Influencers'
-        end
-        click_on 'View Influencers'
-
-        click_on 'Create Orders For All Influencers'
-        # page.accept_alert # required if you run the test with javascript enabled
-        # sleep 2
-        expect_to_see '120 products queued to ship.'
-        expect(InfluencerOrder.count).to eq 120
-      end
-
       it 'creates orders for the correct influencers' do
         influencer1 = create(
           :influencer,
@@ -269,6 +245,22 @@ RSpec.describe "Influencer Orders Create" do
       expect_to_see influencer.first_name
       expect_to_see influencer.address1
       expect_to_see influencer.state
+    end
+
+    it 'does not create orders for influencers who are inactive' do
+      create(:influencer, :with_collection, active: false)
+      user = create(:user)
+
+      visit new_user_session_path
+      login(user)
+      within '#influencers_dropdown' do
+        click_on 'Influencers'
+      end
+      click_on 'View Influencers'
+      click_on "Create Orders"
+
+      expect_to_see '0 products queued to ship.'
+      expect(InfluencerOrder.count).to eq 0
     end
   end
 end

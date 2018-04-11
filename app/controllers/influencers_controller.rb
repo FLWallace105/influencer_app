@@ -50,27 +50,6 @@ class InfluencersController < ApplicationController
     end
   end
 
-  def delete
-    count = 0
-    influencers = Influencer.where(id: check_box_params[:influencers])
-    influencers.each do |influencer|
-      influencer.destroy && count += 1
-    end
-
-    flash[:success] = "#{count} #{'influencer'.pluralize(count)} deleted."
-    redirect_to influencers_path 
-  end
-
-  # def download
-  #   if check_box_params
-  #     influencers = Influencer.where(id: check_box_params[:influencers])
-  #     send_data(influencers.to_csv, type: 'csv', disposition: 'attachment', filename: "product-#{Time.now.strftime('%d/%m/%Y %H:%M:%S')}.csv")
-  #   else
-  #     flash['warning'] = 'You must select at least one influencer.'
-  #     redirect_to influencers_path
-  #   end
-  # end
-
   private
 
   def influencer_import_params
@@ -79,12 +58,8 @@ class InfluencersController < ApplicationController
 
   def influencer_params
     params.require(:influencer).permit(
-      :first_name, :last_name, :email, :phone, :bra_size, :top_size,
+      :first_name, :last_name, :active, :email, :phone, :bra_size, :top_size,
       :bottom_size, :sports_jacket_size, :collection_id
     )
-  end
-
-  def check_box_params
-    params.permit(influencers: [])
   end
 end

@@ -75,7 +75,6 @@ RSpec.describe "Influencer Orders Create Once A Month" do
       Timecop.return
 
       user = create(:user)
-
       visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
@@ -148,5 +147,21 @@ RSpec.describe "Influencer Orders Create Once A Month" do
       end
       Timecop.return
     end
+  end
+
+  it 'does not create orders for influencers who were updated this month, but inactive' do
+    create(:influencer, :with_collection, active: false)
+    user = create(:user)
+
+    visit new_user_session_path
+    login(user)
+    within '#influencers_dropdown' do
+      click_on 'Influencers'
+    end
+    click_on 'View Influencers'
+    click_on "Create This Month's Influencer Orders"
+
+    expect_to_see '0 products queued to ship.'
+    expect(InfluencerOrder.count).to eq 0
   end
 end

@@ -24,6 +24,8 @@ class Influencer::Import
   private
 
   def process_existing_influencer(influencer)
+    influencer.active = true
+    
     if influencer.save
       @updated_count += 1
     else
