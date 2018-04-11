@@ -15,7 +15,6 @@
     </div>
   </div>
 </div>
-<div class="row"></div>
 <div class="row">
   <div class="col col-sm-12">
     <div class="text-center paginate_counter">
@@ -35,99 +34,116 @@
         <% end %>
       </div>
     <% end %>
-    <%= form_tag("#") %>
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <%= submit_tag("Create This Month's Influencer Orders",
-                   formaction: create_once_a_month_influencer_orders_path,
-                   name: :create_once_a_month,
-                   class: 'btn btn-success') %>
-    <table class="table table-hover table-responsive table-condensed">
-      <thead>
-        <tr>
-          <th class="custom_checkbox">
-            <%= check_box_tag 'Select All', nil, nil, class: 'master_check_box' %>
-          </th>
-          <th class="fit">First Name</th>
-          <th class="fit">Last Name</th>
-          <th class="fit">Address Line 1</th>
-          <th class="fit">Address Line 2</th>
-          <th class="fit">City</th>
-          <th class="fit">State</th>
-          <th class="fit">Zip</th>
-          <th class="fit">Email</th>
-          <th class="fit">Phone</th>
-          <th class="fit">Bra Size</th>
-          <th class="fit">Top Size</th>
-          <th class="fit">Leggings Size</th>
-          <th class="fit">Top Size</th>
-          <th class="fit">Updated At</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-      <% influencers.each do |influencer| %>
-        <tr>
-          <td>
-            <%= check_box_tag "influencers[]", influencer.id, nil, class: 'check_box' %>
-          </td>
-          <td>
-            <%= link_to influencer.first_name, edit_influencer_path(influencer) %>
-          </td>
-          <td>
-            <%= influencer.last_name %>
-          </td>
-          <td>
-            <%= influencer.address1 %>
-          </td>
-          <td>
-            <%= influencer.address2 %>
-          </td>
-          <td>
-            <%= influencer.city %>
-          </td>
-          <td>
-            <%= influencer.state %>
-          </td>
-          <td>
-            <%= influencer.zip %>
-          </td>
-          <td>
-            <%= influencer.email %>
-          </td>
-          <td>
-            <%= influencer.phone %>
-          </td>
-          <td>
-            <%= influencer.bra_size %>
-          </td>
-          <td>
-            <%= influencer.top_size %>
-          </td>
-          <td>
-            <%= influencer.bottom_size %>
-          </td>
-          <td>
-            <%= influencer.sports_jacket_size %>
-          </td>
-          <td>
-            <%= influencer.updated_at.strftime('%B %e at %l:%M %p') %>
-          </td>
-        </tr>
-      <% end %>
-    </table>
-    <div class='row'>
-      <%= submit_tag("Create Orders", formaction: influencer_orders_path,
-                     "data-confirm" => "Are you sure you want to create influencer orders?",
-                     class: 'btn btn-primary btn-xs col-sm-2') %>
-      <%= submit_tag("Delete Influencers",
-                     formaction: delete_influencers_path,
-                     "data-confirm" => "Are you sure you want to permanently delete influencer(s)?",
-                     class: 'btn btn-danger btn-xs col-sm-2 col-sm-offset-3') %>
-      <%= submit_tag("Create Orders For All Influencers",
-                     name: :create_orders_for_all_influencers_in_database,
-                     formaction: influencer_orders_path,
-                     "data-confirm" => "Are you sure you want to create influencer orders for every influencer in the database?",
-                     class: 'btn btn-danger btn-xs col-sm-3 col-sm-offset-1') %>
   </div>
+</div>
+<div class="row">
+  <div class="col col-sm-12">
+    <%= form_tag("#") do %>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-12">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= submit_tag("Create This Month's Influencer Orders",
+                         formaction: create_once_a_month_influencer_orders_path,
+                         name: :create_once_a_month,
+                         class: 'btn btn-success btn-block') %>
+            <table class="table table-hover table-responsive table-condensed">
+              <thead>
+                <tr>
+                  <th>
+                    <%= check_box_tag 'Select All', nil, nil, class: 'master_check_box' %>
+                  </th>
+                  <th class="fit">First Name</th>
+                  <th class="fit">Last Name</th>
+                  <th class="fit">Address Line 1</th>
+                  <th class="fit">Address Line 2</th>
+                  <th class="fit">City</th>
+                  <th class="fit">State</th>
+                  <th class="fit">Zip</th>
+                  <th class="fit">Email</th>
+                  <th class="fit">Phone</th>
+                  <th class="fit">Bra Size</th>
+                  <th class="fit">Top Size</th>
+                  <th class="fit">Leggings Size</th>
+                  <th class="fit">Top Size</th>
+                  <th class="fit">Updated</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <% influencers.each do |influencer| %>
+                <tr>
+                  <td>
+                    <%= check_box_tag "influencers[]", influencer.id, nil, class: 'check_box' %>
+                  </td>
+                  <td>
+                    <%= link_to influencer.first_name, edit_influencer_path(influencer) %>
+                  </td>
+                  <td>
+                    <%= influencer.last_name %>
+                  </td>
+                  <td>
+                    <%= influencer.address1 %>
+                  </td>
+                  <td>
+                    <%= influencer.address2 %>
+                  </td>
+                  <td>
+                    <%= influencer.city %>
+                  </td>
+                  <td>
+                    <%= influencer.state %>
+                  </td>
+                  <td>
+                    <%= influencer.zip %>
+                  </td>
+                  <td>
+                    <%= influencer.email %>
+                  </td>
+                  <td>
+                    <%= influencer.phone %>
+                  </td>
+                  <td>
+                    <%= influencer.bra_size %>
+                  </td>
+                  <td>
+                    <%= influencer.top_size %>
+                  </td>
+                  <td>
+                    <%= influencer.bottom_size %>
+                  </td>
+                  <td>
+                    <%= influencer.sports_jacket_size %>
+                  </td>
+                  <td>
+                    <%= influencer.updated_at.strftime('%B %e at %l:%M %p') %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+        <div class='row'>
+          <div class="col-sm-12 bottom-buffer">
+            <%= submit_tag("Create Orders", formaction: influencer_orders_path,
+                           "data-confirm" => "Are you sure you want to create influencer orders?",
+                           class: 'btn btn-primary btn-block') %>
+           </div>
+           <div class="col-sm-12 bottom-buffer">
+             <%= submit_tag("Delete Influencers",
+                            formaction: delete_influencers_path,
+                            "data-confirm" => "Are you sure you want to permanently delete the selected influencer(s)?",
+                            class: 'btn btn-danger btn-block') %>
+           </div>
+           <div class="col-sm-12">
+             <%= submit_tag("Create Orders For All Influencers",
+                            name: :create_orders_for_all_influencers_in_database,
+                            formaction: influencer_orders_path,
+                            "data-confirm" => "Are you sure you want to create influencer orders for every influencer in the database?",
+                            class: 'btn btn-danger btn-block') %>
+           </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 
