@@ -1,0 +1,25 @@
+<h1 class="text-center">
+  <%= @influencer.full_name %>
+</h1>
+
+<div class="row bottom-buffer">
+  <div class="col-sm-6 col-sm-offset-3">
+    <%= simple_form_for(@influencer) do |f| %>
+      <%= f.input :first_name %>
+      <%= f.input :last_name %>
+      <%= f.input :address1, label: 'Address Line One' %>
+      <%= f.input :address2, label: 'Address Line Two' %>
+      <%= f.input :city %>
+      <%= f.input :state %>
+      <%= f.input :zip %>
+      <%= f.input :email, as: :string %>
+      <%= f.input :phone %>
+      <%= f.input :bra_size %>
+      <%= f.input :top_size %>
+      <%= f.input :bottom_size %>
+      <%= f.input :sports_jacket_size %>
+      <%= f.input :collection_id %>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

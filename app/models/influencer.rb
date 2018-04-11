@@ -74,6 +74,10 @@ class Influencer < ApplicationRecord
     )
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def self.strip_whitespace_from_attributes(influencer)
     influencer.attributes.values.each { |attribute| attribute.try(:strip!) }
   end

@@ -7,9 +7,10 @@ Rails.application.routes.draw do
   end
 
   authenticated do
-    resources :influencers, only: [:index, :new] do
+    resources :influencers, only: [:index, :new, :edit, :update] do
       collection do
         post :import
+        post :delete
       end
     end
 

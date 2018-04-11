@@ -14,7 +14,7 @@ RSpec.describe "Influencer Orders Create" do
         end
         click_on 'View Influencers'
         find(:css, "#influencers_[value='#{influencer.id}']").set(true)
-        click_on 'Create Influencer Orders'
+        click_on 'Create Orders'
         # page.accept_alert # required if you run the test with javascript enabled
 
         expect_to_see '1 product queued to ship.'
@@ -39,7 +39,7 @@ RSpec.describe "Influencer Orders Create" do
         end
         click_on 'View Influencers'
         find(:css, "#influencers_[value='#{influencer.id}']").set(true)
-        click_on 'Create Influencer Orders'
+        click_on 'Create Orders'
         # page.accept_alert # required if you run the test with javascript enabled
 
         expect_to_see '3 products queued to ship.'
@@ -58,7 +58,7 @@ RSpec.describe "Influencer Orders Create" do
         end
         click_on 'View Influencers'
         find(:css, "#influencers_[value='#{influencer.id}']").set(true)
-        click_on 'Create Influencer Orders'
+        click_on 'Create Orders'
         # page.accept_alert # required if you run the test with javascript enabled
 
         expect_to_see influencer.first_name
@@ -92,7 +92,7 @@ RSpec.describe "Influencer Orders Create" do
         click_on 'View Influencers'
         find(:css, "#influencers_[value='#{influencer1.id}']").set(true)
         find(:css, "#influencers_[value='#{influencer2.id}']").set(true)
-        click_on 'Create Influencer Orders'
+        click_on 'Create Orders'
         # page.accept_alert # required if you run the test with javascript enabled
         first_order_group = InfluencerOrder.where(influencer: Influencer.first)
         second_order_group = InfluencerOrder.where(influencer: Influencer.second)
@@ -122,7 +122,7 @@ RSpec.describe "Influencer Orders Create" do
         end
         click_on 'View Influencers'
         find(:css, "#influencers_[value='#{influencer.id}']").set(true)
-        click_on 'Create Influencer Orders'
+        click_on 'Create Orders'
         # page.accept_alert # required if you run the test with javascript enabled
 
         expect_to_see '5 products queued to ship.'
@@ -147,7 +147,7 @@ RSpec.describe "Influencer Orders Create" do
         end
         click_on 'View Influencers'
         find(:css, "#influencers_[value='#{influencer.id}']").set(true)
-        click_on 'Create Influencer Orders'
+        click_on 'Create Orders'
         # page.accept_alert # required if you run the test with javascript enabled
 
         expect(InfluencerOrder.all.pluck(:line_item).map { |line_item| line_item["product_id"] }.uniq.count).to eq 5
@@ -171,7 +171,7 @@ RSpec.describe "Influencer Orders Create" do
         end
         click_on 'View Influencers'
         find(:css, "#Select_All").set(true)
-        click_on 'Create Influencer Orders'
+        click_on 'Create Orders'
         page.accept_alert
         sleep 2
         expect_to_see '100 products queued to ship.'
@@ -195,7 +195,7 @@ RSpec.describe "Influencer Orders Create" do
         end
         click_on 'View Influencers'
 
-        click_on 'Create Orders For All Influencers in the Database'
+        click_on 'Create Orders For All Influencers'
         # page.accept_alert # required if you run the test with javascript enabled
         # sleep 2
         expect_to_see '120 products queued to ship.'
@@ -229,7 +229,7 @@ RSpec.describe "Influencer Orders Create" do
         click_on 'View Influencers'
         find(:css, "#influencers_[value='#{influencer1.id}']").set(true)
         find(:css, "#influencers_[value='#{influencer3.id}']").set(true)
-        click_on 'Create Influencer Orders'
+        click_on 'Create Orders'
         # page.accept_alert # required if you run the test with javascript enabled
 
         expect_to_see '6 products queued to ship.'
@@ -258,7 +258,7 @@ RSpec.describe "Influencer Orders Create" do
       end
       click_on 'View Influencers'
       find(:css, "#influencers_[value='#{influencer.id}']").set(true)
-      click_on 'Create Influencer Orders'
+      click_on 'Create Orders'
       # page.accept_alert # required if you run the test with javascript enabled
 
       expect_to_see '0 products queued to ship.'
