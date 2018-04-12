@@ -90,9 +90,12 @@ class Influencer < ApplicationRecord
     influencer.sports_jacket_size.try(:upcase!)
   end
 
-  def self.search_by_email_or_last_name(search_term)
+  def self.search_by_email_or_name(search_term)
     where('email ILIKE ?', "%#{search_term}%")
       .or(where('last_name ILIKE ?', "%#{search_term}%"))
+      .or(where('first_name ILIKE ?', "%#{search_term}%"))
+      .or(where("first_name ILIKE ? AND last_name ILIKE ?",
+                search_term.split(' ').first, search_term.split(' ').last))
   end
 
   private

@@ -66,12 +66,11 @@ class InfluencerOrder < ApplicationRecord
       csv << CSV_HEADERS
       clean_rows.each { |data| csv << CSV_HEADERS.map { |key| data[key] } }
     end
-    
+
     filename
   end
 
   def self.search_by_name_or_last_name(query)
-    query = query.strip
     where('influencer_full_name ILIKE ?', "%#{query}%")
       .or(where('influencer_full_name ILIKE ?', "%#{query}"))
       .or(where('influencer_full_name ILIKE ?', "#{query}%"))

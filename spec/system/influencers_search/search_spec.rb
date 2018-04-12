@@ -11,29 +11,63 @@ RSpec.describe "Influencers Search" do
           click_on 'Influencers'
         end
         click_on 'View Influencers'
-        fill_in 'email or last name', with: "email@example.com"
+        fill_in 'email or name', with: "email@example.com"
         click_on 'Search'
         expect(find("input[name='query']").value).to eq 'email@example.com'
       end
 
-      it "shows the influencer if it's last name matches the query" do
+      it "shows the influencer if the influencer's full name matches the query" do
         influencer = create(
           :influencer,
           :with_collection,
-          last_name: 'the_last_name'
+          first_name: 'Rene',
+          last_name: 'Descartes'
         )
         user = create(:user)
         visit new_user_session_path
         login(user)
-        within '#influencers_dropdown' do
-          click_on 'Influencers'
-        end
-        click_on 'View Influencers'
-        fill_in 'email or last name', with: "the_last_name"
+        visit influencers_path
+        fill_in "email or name", with: "Rene Descartes"
         click_on 'Search'
+
         expect_to_see influencer.first_name
-        expect_to_see influencer.address1
-        expect_to_see influencer.state
+        expect_to_see influencer.last_name
+      end
+
+      it "shows the influencer if the influencer's first name matches the query" do
+        influencer = create(
+          :influencer,
+          :with_collection,
+          first_name: 'Rene',
+          last_name: 'Descartes'
+        )
+        user = create(:user)
+        visit new_user_session_path
+        login(user)
+        visit influencers_path
+        fill_in "email or name", with: "Rene"
+        click_on 'Search'
+
+        expect_to_see influencer.first_name
+        expect_to_see influencer.last_name
+      end
+
+      it "shows the influencer if the influencer's last name matches the query" do
+        influencer = create(
+          :influencer,
+          :with_collection,
+          first_name: 'Rene',
+          last_name: 'Descartes'
+        )
+        user = create(:user)
+        visit new_user_session_path
+        login(user)
+        visit influencers_path
+        fill_in "email or name", with: "Descartes"
+        click_on 'Search'
+
+        expect_to_see influencer.first_name
+        expect_to_see influencer.last_name
       end
 
       it "shows the influencer if it's email matches the query" do
@@ -49,7 +83,7 @@ RSpec.describe "Influencers Search" do
           click_on 'Influencers'
         end
         click_on 'View Influencers'
-        fill_in 'email or last name', with: "the_email@example.com"
+        fill_in 'email or name', with: "the_email@example.com"
         click_on 'Search'
         expect_to_see influencer.first_name
         expect_to_see influencer.address1
@@ -70,7 +104,7 @@ RSpec.describe "Influencers Search" do
           click_on 'Influencers'
         end
         click_on 'View Influencers'
-        fill_in 'email or last name', with: "should_not_exist"
+        fill_in 'email or name', with: "should_not_exist"
         click_on 'Search'
         expect_not_to_see influencer.first_name
         expect_not_to_see influencer.address1
@@ -126,7 +160,7 @@ RSpec.describe "Influencers Search" do
           click_on 'Influencers'
         end
         click_on 'View Influencers'
-        fill_in 'email or last name', with: "      the_email@example.com      "
+        fill_in 'email or name', with: "      the_email@example.com      "
         click_on 'Search'
         expect_to_see influencer.first_name
         expect_to_see influencer.address1
@@ -146,7 +180,7 @@ RSpec.describe "Influencers Search" do
           click_on 'Influencers'
         end
         click_on 'View Influencers'
-        fill_in 'email or last name', with: "        Descartes      "
+        fill_in 'email or name', with: "        Descartes      "
         click_on 'Search'
         expect_to_see influencer.first_name
         expect_to_see influencer.address1

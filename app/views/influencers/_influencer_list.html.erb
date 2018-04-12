@@ -3,7 +3,7 @@
     <div id="custom-search-input">
       <div class="input-group col-md-12">
         <form action="<%= action %>" method="get">
-          <input class="form-control input-lg" name="query" value="<%= "#{query && query != '*' ? query : nil}" %>" placeholder="email or last name" title="Search" type="text"></input>
+          <input class="form-control input-lg" name="query" value="<%= "#{query && query != '*' ? query : nil}" %>" placeholder="email or name" title="Search" type="text"></input>
           <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
           <span class="input-group-btn">
             <button class="btn btn-info btn-lg" title="Search" type="submit">
