@@ -52,7 +52,8 @@ class InfluencerOrdersController < ApplicationController
   end
 
   def index
-    @influencer_orders = InfluencerOrder.all.page(params[:page]).per(100)
+    ids = InfluencerOrder.pluck(:name, :id).uniq(&:first).map(&:last)
+    @influencer_orders = InfluencerOrder.where(id: ids).page(params[:page]).per(100)
   end
 
   private

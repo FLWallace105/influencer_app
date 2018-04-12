@@ -69,6 +69,10 @@ class InfluencerOrder < ApplicationRecord
     filename
   end
 
+  def self.search_by_name_or_last_name(query)
+    where('name ILIKE ?', "%#{query}%")
+  end
+
   def to_row_hash
     {
       'order_number' => name,
