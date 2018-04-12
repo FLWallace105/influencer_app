@@ -52,6 +52,7 @@ class InfluencerOrdersController < ApplicationController
   end
 
   def index
+    @influencer_orders = InfluencerOrder.all.page(params[:page]).per(100)
   end
 
   private
