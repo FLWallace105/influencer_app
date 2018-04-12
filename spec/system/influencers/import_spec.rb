@@ -17,6 +17,32 @@ RSpec.describe "Influencers Import" do
         expect_to_see 'Imported 1 influencer.'
       end
 
+      it 'saves all the attributes correctly' do
+        user = create(:user)
+        visit new_user_session_path
+        login(user)
+        visit new_influencer_path
+        attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
+        click_on 'Upload Influencers'
+
+        influencer = Influencer.first
+        expect(influencer.first_name).to eq 'test'
+        expect(influencer.last_name).to eq 'Yudkin'
+        expect(influencer.active?).to eq true
+        expect(influencer.address1).to eq '5553-B Bandini Blvd'
+        expect(influencer.address2.present?).to be false
+        expect(influencer.city).to eq 'Bell'
+        expect(influencer.state).to eq 'CA'
+        expect(influencer.zip).to eq '90201'
+        expect(influencer.email).to eq 'tester1@gmail.com'
+        expect(influencer.phone).to eq '1234567890'
+        expect(influencer.bra_size).to eq 'M'
+        expect(influencer.top_size).to eq 'M'
+        expect(influencer.bottom_size).to eq 'M'
+        expect(influencer.sports_jacket_size).to eq 'M'
+        expect(influencer.collection_id).to eq 5304844306
+      end
+
       it 'does not create an influencer_order' do
         user = create(:user)
         visit new_user_session_path

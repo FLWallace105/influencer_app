@@ -1,7 +1,7 @@
 # this factory can only be built with an influencer passed in
 FactoryBot.define do
   factory :influencer_order do
-    name 'TEST_ORDER_ONE'
+    name { InfluencerOrder.generate_order_number }
     shipping_address(
       { "zip" => "12345",
         "city" => "Miami",

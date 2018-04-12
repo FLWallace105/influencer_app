@@ -32,7 +32,7 @@ RSpec.describe "Influencers Create" do
         expect(influencer.last_name).to eq 'Doe'
         expect(influencer.active?).to eq true
         expect(influencer.address1).to eq '1234 Bandini St.'
-        expect(influencer.address2).to eq ''
+        expect(influencer.address2.present?).to be false
         expect(influencer.city).to eq 'Los Angeles'
         expect(influencer.state).to eq 'CA'
         expect(influencer.zip).to eq '90210'

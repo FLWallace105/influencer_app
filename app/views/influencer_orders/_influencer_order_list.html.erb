@@ -75,13 +75,13 @@
                     <%= print_order_line_items(order) %>
                   </td>
                   <td>
-                    <%= order.influencer.full_name %>
+                    <%= order.influencer_full_name %>
                   </td>
                   <td>
                     <%= order.created_at.strftime('%B %e at %l:%M %p') %>
                   </td>
                   <td>
-                    <%= order.uploaded_at.strftime('%B %e at %l:%M %p') %>
+                    <%= order.uploaded_at.try(:strftime, '%B %e at %l:%M %p') %>
                   </td>
                   <td>
                     <%= order.tracking.try(:carrier) %>
