@@ -5,7 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.1.5'
+gem 'rails', '~> 5.2'
+gem 'bootsnap', '~> 1.3' # Boot large ruby/rails apps faster
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 gem 'devise', '~> 4.4', '>= 4.4.3'
@@ -29,7 +30,7 @@ gem 'bootswatch-rails', '~> 3.3', '>= 3.3.5'
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'turbolinks', '~> 5' # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'simple_form', '~> 3.5', '>= 3.5.1'
+gem 'simple_form', '~> 4.0'
 gem 'kaminari', '~> 1.1', '>= 1.1.1' # Pagination
 
 group :development, :test do

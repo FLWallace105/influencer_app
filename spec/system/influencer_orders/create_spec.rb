@@ -216,7 +216,7 @@ RSpec.describe "Influencer Orders Create" do
     it 'shows the email of the influencer whose order failed to be created along with the error message' do
       product = create(:product, :leggings, :with_collection_and_variants)
       influencer = create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
-      Influencer.any_instance.stub(:shipping_address).and_return(nil)
+      allow_any_instance_of(Influencer).to receive(:shipping_address).and_return(nil)
       user = create(:user)
       login(user)
       within '#influencers_dropdown' do
@@ -230,8 +230,7 @@ RSpec.describe "Influencer Orders Create" do
       expect_to_see '0 products queued to ship.'
       expect(InfluencerOrder.count).to eq 0
       expect_to_see("#{Influencer.first.email} - Shipping address can't be blank")
-      "0 products queued to ship."
-
+      expect_to_see "0 products queued to ship."
       expect_to_see influencer.first_name
       expect_to_see influencer.address1
       expect_to_see influencer.state
