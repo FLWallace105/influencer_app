@@ -8,7 +8,9 @@ class Influencer::Import
 
     CSV.foreach(file.path, headers: true, header_converters: :symbol) do |row|
       influencer = Influencer.assign_from_row(row)
-      if influencer.persisted?
+      if CustomCollection.find_by_id(row[:collection_id]).nil?
+        errors.add(:base, "Line #{$INPUT_LINE_NUMBER} - #{influencer.try(:email)}, Collection id not found.")
+      elsif influencer.persisted?
         process_existing_influencer(influencer)
       else
         process_new_influencer(influencer)
@@ -25,7 +27,7 @@ class Influencer::Import
 
   def process_existing_influencer(influencer)
     influencer.active = true
-    
+
     if influencer.save
       @updated_count += 1
     else

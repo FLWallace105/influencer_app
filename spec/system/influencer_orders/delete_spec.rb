@@ -9,14 +9,16 @@ RSpec.describe "InfluencerOrders Delete" do
         influencer3 = create(:influencer, :with_collection, :with_order)
         influencer4 = create(:influencer, :with_collection, :with_order)
         user = create(:user)
+
         login(user)
         visit influencer_orders_path
-        find(:css, "#influencer_orders_[value='#{influencer1.id}']").set(true)
-        find(:css, "#influencer_orders_[value='#{influencer3.id}']").set(true)
+        all('input[type="checkbox"]')[1].click
+        all('input[type="checkbox"]')[3].click
         click_on 'Delete Orders'
         # page.accept_alert # required if you run the test with javascript enabled
 
         expect_to_see '2 orders deleted.'
+        expect(InfluencerOrder.count).to eq 2
         expect(influencer1.reload.orders.any?).to be false
         expect(influencer2.reload.orders.any?).to be true
         expect(influencer3.reload.orders.any?).to be false

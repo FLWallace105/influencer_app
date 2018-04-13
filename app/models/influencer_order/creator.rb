@@ -17,7 +17,7 @@ class InfluencerOrder::Creator
 
     @influencers.each do |influencer|
       order_number = InfluencerOrder.generate_order_number
-
+      
       influencer.sized_variants_from_collection.each do |variant|
         influencer_order = InfluencerOrder.new_from_influencer_variant(
           influencer: influencer,

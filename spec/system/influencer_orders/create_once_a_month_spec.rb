@@ -158,4 +158,23 @@ RSpec.describe "Influencer Orders Create Once A Month" do
     expect_to_see '0 products queued to ship.'
     expect(InfluencerOrder.count).to eq 0
   end
+
+  it 'does not create orders for influencers with collection_ids not in the database' do
+    create(
+      :influencer,
+      collection_id: 1234567890,
+      top_size: 'S',
+      bottom_size: 'M',
+      bra_size: 'XL'
+    )
+    user = create(:user)
+
+    login(user)
+    visit influencers_path
+    click_on "Create This Month's Influencer Orders"
+    # page.accept_alert # required if you run the test with javascript enabled
+
+    expect_to_see '0 products queued to ship.'
+    expect(InfluencerOrder.count).to eq 0
+  end
 end

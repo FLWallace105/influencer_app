@@ -31,7 +31,11 @@ class InfluencersController < ApplicationController
   def create
     @influencer = Influencer.new(influencer_params)
 
-    if @influencer.save(influencer_params)
+    if CustomCollection.find_by_id(influencer_params[:collection_id]).nil?
+      flash[:danger] = "The Shopify cache is not up to date or the collection_id
+        is wrong. Please check the collection_id is correct and refresh the Shopify cache."
+      redirect_to new_influencer_path
+    elsif @influencer.save(influencer_params)
       redirect_to edit_influencer_path(@influencer), notice: "Successfully created #{@influencer.full_name}."
     else
       @import = Influencer::Import.new
