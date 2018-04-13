@@ -1,5 +1,1 @@
-<div class='row'>
-  <div class="col col-sm-12"</div>
-    <h1 class='text-center'> hello from influencers orders index </h1>
-  </div>
-</div>
+<%= render partial: 'influencer_order_list', locals: { influencer_orders: @influencer_orders, action: influencer_orders_search_path, query: @query } %>

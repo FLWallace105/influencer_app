@@ -8,6 +8,8 @@ class InfluencerOrder < ApplicationRecord
   validates_presence_of :billing_address
   validates_presence_of :line_item
 
+  before_save :set_influencer_full_name
+
    ORDER_NUMBER_CHARACTERS = [('a'..'z').to_a, ('A'..'Z').to_a, ('0'..'9').to_a].flatten.to_a.freeze
 
    def self.generate_order_number(prefix: '#IN')
@@ -56,7 +58,6 @@ class InfluencerOrder < ApplicationRecord
     ].freeze
 
   def self.create_csv(orders)
-    # create empty CSV file with appropriate name
     filename = name_csv
     rows = orders.map(&:to_row_hash)
     clean_rows = rows.map { |row| row.map { |k, v| [k, Iconv.conv('ASCII//TRANSLIT', 'UTF-8', v.to_s)] }.to_h }
@@ -67,6 +68,13 @@ class InfluencerOrder < ApplicationRecord
     end
 
     filename
+  end
+
+  def self.search_by_name_or_last_name(query)
+    where('influencer_full_name ILIKE ?', "%#{query}%")
+      .or(where('influencer_full_name ILIKE ?', "%#{query}"))
+      .or(where('influencer_full_name ILIKE ?', "#{query}%"))
+      .or(where('name ILIKE ?', "%#{query}%"))
   end
 
   def to_row_hash
@@ -107,5 +115,11 @@ class InfluencerOrder < ApplicationRecord
       'sell_price' => variant.price,
       'product_weight' => variant.weight
     }
+  end
+
+  private
+
+  def set_influencer_full_name
+    self.influencer_full_name = influencer.full_name
   end
 end

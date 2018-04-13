@@ -14,6 +14,7 @@ class Influencer < ApplicationRecord
   validates_inclusion_of :bottom_size, :in => ['XS', 'S', 'M', 'L', 'XL']
   validates_inclusion_of :sports_jacket_size, :in => ['XS', 'S', 'M', 'L', 'XL']
   validates_presence_of :collection_id
+  validates_inclusion_of :active, in: [true, false]
   validates_uniqueness_of :email
   validates :email, email: true
   validate :unique_shipping_address
@@ -74,6 +75,10 @@ class Influencer < ApplicationRecord
     )
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def self.strip_whitespace_from_attributes(influencer)
     influencer.attributes.values.each { |attribute| attribute.try(:strip!) }
   end
@@ -83,6 +88,14 @@ class Influencer < ApplicationRecord
     influencer.top_size.try(:upcase!)
     influencer.bottom_size.try(:upcase!)
     influencer.sports_jacket_size.try(:upcase!)
+  end
+
+  def self.search_by_email_or_name(search_term)
+    where('email ILIKE ?', "%#{search_term}%")
+      .or(where('last_name ILIKE ?', "%#{search_term}%"))
+      .or(where('first_name ILIKE ?', "%#{search_term}%"))
+      .or(where("first_name ILIKE ? AND last_name ILIKE ?",
+                search_term.split(' ').first, search_term.split(' ').last))
   end
 
   private

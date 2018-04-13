@@ -1,0 +1,158 @@
+<div class="row">
+  <div class="col-sm-5">
+    <div id="custom-search-input">
+      <div class="input-group col-md-12">
+        <form action="<%= action %>" method="get">
+          <input class="form-control input-lg" name="query" value="<%= "#{query && query != '*' ? query : nil}" %>" placeholder="email or name" title="Search" type="text"></input>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <span class="input-group-btn">
+            <button class="btn btn-info btn-lg" title="Search" type="submit">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-sm-12">
+    <div class="text-center paginate_counter">
+      <span> Showing </span>
+      <span class='text-danger'>
+        <%= influencers.count %>
+      </span>
+      <span> of </span>
+      <span class="paginate_counter">
+        <%=  pluralize(influencers.total_count, "Influencer")%>
+      </span>
+    </div>
+    <% if @influencer_order_creator.try(:errors).try(:any?) %>
+      <div class="alert alert-danger" role="alert">
+        <% @influencer_order_creator.errors.full_messages.each do |msg| %>
+          <div><%= msg %></div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-sm-12">
+    <%= form_tag("#") do %>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-12">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+            <%= submit_tag("Create This Month's Influencer Orders",
+                         formaction: create_once_a_month_influencer_orders_path,
+                         name: :create_once_a_month,
+                         class: 'btn btn-success btn-block') %>
+            <table class="table table-hover table-responsive table-condensed">
+              <thead>
+                <tr>
+                  <th class="fit">
+                    <%= check_box_tag 'Select All', nil, nil, class: 'master_check_box' %>
+                  </th>
+                  <th class="fit">First Name</th>
+                  <th class="fit">Last Name</th>
+                  <th class="fit">Active?</th>
+                  <th class="fit">Address Line 1</th>
+                  <th class="fit">Address Line 2</th>
+                  <th class="fit">City</th>
+                  <th class="fit">State</th>
+                  <th class="fit">Zip</th>
+                  <th class="fit">Email</th>
+                  <th class="fit">Phone</th>
+                  <th class="fit">Bra Size</th>
+                  <th class="fit">Top Size</th>
+                  <th class="fit">Leggings Size</th>
+                  <th class="fit">Top Size</th>
+                  <th class="fit">Updated</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <% influencers.each do |influencer| %>
+                <tr>
+                  <td>
+                    <%= check_box_tag "influencers[]", influencer.id, nil, class: 'check_box' %>
+                  </td>
+                  <td>
+                    <%= link_to influencer.first_name, edit_influencer_path(influencer) %>
+                  </td>
+                  <td>
+                    <%= influencer.last_name %>
+                  </td>
+                  <td>
+                    <%= influencer.active? %>
+                  </td>
+                  <td>
+                    <%= influencer.address1 %>
+                  </td>
+                  <td>
+                    <%= influencer.address2 %>
+                  </td>
+                  <td>
+                    <%= influencer.city %>
+                  </td>
+                  <td>
+                    <%= influencer.state %>
+                  </td>
+                  <td>
+                    <%= influencer.zip %>
+                  </td>
+                  <td>
+                    <%= influencer.email %>
+                  </td>
+                  <td>
+                    <%= influencer.phone %>
+                  </td>
+                  <td>
+                    <%= influencer.bra_size %>
+                  </td>
+                  <td>
+                    <%= influencer.top_size %>
+                  </td>
+                  <td>
+                    <%= influencer.bottom_size %>
+                  </td>
+                  <td>
+                    <%= influencer.sports_jacket_size %>
+                  </td>
+                  <td>
+                    <%= influencer.updated_at.strftime('%B %e at %l:%M %p') %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+        <div class='row'>
+          <div class="col-sm-12 bottom-buffer">
+            <%= submit_tag("Create Orders", formaction: influencer_orders_path,
+                           "data-confirm" => "Are you sure you want to create influencer orders?",
+                           class: 'btn btn-danger btn-block') %>
+           </div>
+           <div class="col-sm-12 bottom-buffer">
+             <%= submit_tag("Mark Active",
+                            formaction: mark_active_influencers_path,
+                            "data-confirm" => "Are you sure you want to mark the influencer(s) active?",
+                            class: 'btn btn-danger btn-block') %>
+           </div>
+
+           <div class="col-sm-12 bottom-buffer">
+             <%= submit_tag("Mark Inactive",
+                            formaction: mark_inactive_influencers_path,
+                            "data-confirm" => "Are you sure you want to mark the influencer(s) inactive?",
+                            class: 'btn btn-danger btn-block') %>
+           </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <%= paginate influencers %>
+</div>

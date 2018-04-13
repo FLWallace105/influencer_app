@@ -1,0 +1,56 @@
+<h1 class="text-center">How To Use This App </h1>
+
+<h4>Refresh Shopify Cache</h4>
+<p class='alert alert-info'>
+  Before creating influencers or their orders this app needs to be updated
+  every month when new products and collections are added to Shopify. If it
+  doesn't update automatically, you can update it here.
+</p>
+
+<h4>Influencers > New Influencers </h4>
+<p class='alert alert-info'>
+  This saves influencers from a csv file to the database. Influencers that
+  already exist will be updated; if they were inactive they will automatically
+  become active. The app will skip lines with errors and show you the line
+  numbers it skipped with an error message describing the problem.
+  You can find the line, fix it, and then upload the entire csv file over again.
+  You can also create one influencer at a time through the form here.
+</p>
+
+<h4> Influencers > View Influencers > Create This Month's Influencer Orders </h4>
+<p class='alert alert-success'>
+  After uploading all the csv's for the month, this will create orders for all
+  the influencers that are active and were either created or updated this month. To prevent
+  duplicate orders from being created, this can only be done once a month so make
+  sure all the csv's have been uploaded before performing this action. This
+  should be your default workflow.
+</p>
+
+<h4> Orders > Send Influencer Orders to Warehouse </h4>
+<p class='alert alert-info'>
+  This will grab all the orders in the database that have not been sent to the
+  warehouse yet and then it will send them to the warehouse.
+</p>
+
+<h4> Influencers > View Influencers > Create Orders </h4>
+<p class='alert alert-danger'>
+  In case you need to create additinoal orders after you have clicked the
+  'Create This Month's Influencer Orders' button, you may select influencers
+  individually by clicking the checkbox by their name and then clicking
+  'Create Orders'. You can also select all the influencers on the page
+  at once by clicking the checkbox at the very top left corner of the table.
+  Selected influencers who are not active will not have orders created.
+  Use this button with CAUTION since it allows for potentially creating duplicate
+  orders.
+</p>
+
+<h4> Influencers > View Influencers > Mark Active </h4>
+<p class='alert alert-danger'>
+  Active influencers are eligible to have orders created. An active influencer
+  is not necessarily assigned to the current month's collection.
+</p>
+
+<h4> Influencers > View Influencers > Mark Inactive </h4>
+<p class='alert alert-danger'>
+  Inactive influencers are not eligible to have orders created.
+</p>

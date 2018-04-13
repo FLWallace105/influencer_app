@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327185814) do
+ActiveRecord::Schema.define(version: 20180412192615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20180327185814) do
     t.datetime "uploaded_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "influencer_full_name"
     t.index ["name"], name: "index_influencer_orders_on_name"
   end
 
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(version: 20180327185814) do
     t.bigint "collection_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
     t.index ["updated_at"], name: "index_influencers_on_updated_at"
   end
 
@@ -135,69 +137,6 @@ ActiveRecord::Schema.define(version: 20180327185814) do
     t.datetime "updated_at"
     t.text "variants"
     t.string "vendor"
-  end
-
-  create_table "shopify_orders", id: :bigint, default: nil, force: :cascade do |t|
-    t.bigint "app_id"
-    t.json "billing_address"
-    t.string "browser_ip"
-    t.boolean "buyer_accepts_marketing"
-    t.datetime "cancelled_at"
-    t.string "cancel_reason"
-    t.string "cart_token"
-    t.bigint "checkout_id"
-    t.string "checkout_token"
-    t.datetime "closed_at"
-    t.boolean "confirmed"
-    t.string "contact_email"
-    t.datetime "created_at"
-    t.float "currency"
-    t.json "customer"
-    t.string "customer_locale"
-    t.bigint "device_id"
-    t.json "discount_codes"
-    t.string "email"
-    t.string "financial_status"
-    t.json "fulfillments"
-    t.string "fulfillment_status"
-    t.string "gateway"
-    t.string "landing_site"
-    t.string "landing_site_ref"
-    t.text "line_items"
-    t.bigint "location_id"
-    t.string "name"
-    t.text "note"
-    t.json "note_attributes"
-    t.integer "number"
-    t.integer "order_number"
-    t.string "order_status_url"
-    t.json "payment_gateway_names"
-    t.string "phone"
-    t.datetime "processed_at"
-    t.string "processing_method"
-    t.string "reference"
-    t.string "referring_site"
-    t.json "refunds"
-    t.json "shipping_address"
-    t.text "shipping_lines"
-    t.string "source_identifier"
-    t.string "source_name"
-    t.string "source_url"
-    t.float "subtotal_price"
-    t.string "tags"
-    t.boolean "taxes_included"
-    t.text "tax_lines"
-    t.boolean "test"
-    t.string "token"
-    t.float "total_discounts"
-    t.float "total_line_items_price"
-    t.float "total_price"
-    t.float "total_price_usd"
-    t.float "total_tax"
-    t.integer "total_weight"
-    t.datetime "updated_at"
-    t.bigint "user_id"
-    t.datetime "sent_to_acs_at"
   end
 
   create_table "users", force: :cascade do |t|

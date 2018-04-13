@@ -19,14 +19,9 @@ module ShopifyCache
     pull_entity ShopifyAPI::CustomCollection, CustomCollection
   end
 
-  def self.pull_orders
-    pull_entity ShopifyAPI::Order, ShopifyOrder
-  end
-
   def self.pull_all
     pull_collects
     pull_custom_collections
-    pull_orders
     pull_products
   end
 

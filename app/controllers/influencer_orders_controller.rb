@@ -1,24 +1,38 @@
 class InfluencerOrdersController < ApplicationController
-  def new
-    @influencer_order_creator = InfluencerOrder::Creator.new
-  end
-
   def create
-    @influencer_order_creator = InfluencerOrder::Creator.new
-  
-    if InfluencerOrder.where("created_at >= ?", Time.zone.now.beginning_of_month).any?
-      flash[:danger] = 'Influencer orders were already created this month.'
-      redirect_to new_influencer_order_path
-    elsif @influencer_order_creator.save
+    @influencer_order_creator = InfluencerOrder::Creator.new(check_box_params)
+    @influencers = @influencer_order_creator.influencers.page(params[:page]).per(100)
+
+    if @influencer_order_creator.save
       flash[:success] =
         "#{@influencer_order_creator.created_count}
         #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
-      redirect_to new_influencer_order_path
+      redirect_to influencers_path
     else
       flash.now[:danger] =
         "Uh oh. Something went wrong. #{@influencer_order_creator.created_count}
         #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
-      render new_influencer_order_path
+      render :create
+    end
+  end
+
+  def create_once_a_month
+    @influencer_order_creator = InfluencerOrder::Creator.new(check_box_params)
+    @influencers = @influencer_order_creator.influencers.page(params[:page]).per(100)
+
+    if InfluencerOrder.where("created_at >= ?", Time.zone.now.beginning_of_month).any?
+      flash[:danger] = 'Influencer orders were already created this month.'
+      redirect_to influencers_path
+    elsif @influencer_order_creator.save
+      flash[:success] =
+        "#{@influencer_order_creator.created_count}
+        #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
+      redirect_to influencers_path
+    else
+      flash.now[:danger] =
+        "Uh oh. Something went wrong. #{@influencer_order_creator.created_count}
+        #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
+      render :create
     end
   end
 
@@ -38,5 +52,34 @@ class InfluencerOrdersController < ApplicationController
   end
 
   def index
+    ids = InfluencerOrder.pluck(:name, :id).uniq(&:first).map(&:last)
+    @influencer_orders = InfluencerOrder.where(id: ids).page(params[:page]).per(100)
+  end
+
+  def delete
+    partial_orders = InfluencerOrder.where(id: delete_params[:influencer_orders])
+    count = partial_orders.count
+    complete_orders = partial_orders.flat_map { |order| InfluencerOrder.where(name: order.name) }
+
+    complete_orders.each(&:delete)
+    flash[:success] = "#{count} #{'order'.pluralize(count)} deleted."
+
+    redirect_to influencer_orders_path
+  end
+
+  private
+
+  def check_box_params
+    if params[:create_once_a_month]
+      :create_once_a_month
+    elsif params[:influencers]
+      params.permit(influencers: [])
+    else
+      params
+    end
+  end
+
+  def delete_params
+    params.permit(influencer_orders: [])
   end
 end

@@ -1,0 +1,118 @@
+<div class="row">
+  <div class="col-sm-5">
+    <div id="custom-search-input">
+      <div class="input-group col-md-12">
+        <form action="<%= action %>" method="get">
+          <input class="form-control input-lg" name="query" value="<%= "#{query && query != '*' ? query : nil}" %>" placeholder="order name or influencer's name" title="Search" type="text"></input>
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <span class="input-group-btn">
+            <button class="btn btn-info btn-lg" title="Search" type="submit">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-sm-12">
+    <div class="text-center paginate_counter">
+      <span> Showing </span>
+      <span class='text-danger'>
+        <%= influencer_orders.count %>
+      </span>
+      <span> of </span>
+      <span class="paginate_counter">
+        <%=  pluralize(influencer_orders.total_count, "Order")%>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-sm-12">
+    <%= form_tag("#") do %>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-hover table-responsive table-condensed">
+              <thead>
+                <tr>
+                  <th class="fit">
+                    <%= check_box_tag 'Select All', nil, nil, class: 'master_check_box' %>
+                  </th>
+                  <th class="fit">Name</th>
+                  <th class="fit">Billing Address</th>
+                  <th class="fit">Shipping Address </th>
+                  <th class="fit">Line Items</th>
+                  <th class="fit">Influencer</th>
+                  <th class="fit">Created</th>
+                  <th class="fit">Uploaded</th>
+                  <th class="fit">Carrier</th>
+                  <th class="fit">Tracking Number</th>
+                  <th class="fit">Tracking Created</th>
+                  <th class="fit">Tracking Emailed</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <% influencer_orders.each do |order| %>
+                <tr>
+                  <td>
+                    <%= check_box_tag "influencer_orders[]", order.id, nil, class: 'check_box' %>
+                  </td>
+                  <td>
+                    <%= order.name %>
+                  </td>
+                  <td>
+                    <%= print_order_billing_address(order) %>
+                  </td>
+                  <td>
+                    <%= print_order_shipping_address(order) %>
+                  </td>
+                  <td>
+                    <%= print_order_line_items(order) %>
+                  </td>
+                  <td>
+                    <%= order.influencer_full_name %>
+                  </td>
+                  <td>
+                    <%= order.created_at.strftime('%B %e at %l:%M %p') %>
+                  </td>
+                  <td>
+                    <%= order.uploaded_at.try(:strftime, '%B %e at %l:%M %p') %>
+                  </td>
+                  <td>
+                    <%= order.tracking.try(:carrier) %>
+                  </td>
+                  <td>
+                    <%= order.tracking.try(:tracking_number) %>
+                  </td>
+                  <td>
+                    <%= order.tracking.try(:created_at).try(:strftime, '%B %e at %l:%M %p') %>
+                  </td>
+                  <td>
+                    <%= order.tracking.try(:email_sent_at).try(:strftime, '%B %e at %l:%M %p') %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+          </div>
+        </div>
+        <div class='row'>
+           <div class="col-sm-12 bottom-buffer">
+             <%= submit_tag("Delete Orders",
+                            formaction: delete_influencer_orders_path,
+                            "data-confirm" => "Are you sure you want to delete the order(s)?",
+                            class: 'btn btn-danger btn-block') %>
+           </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <%= paginate influencer_orders %>
+</div>
