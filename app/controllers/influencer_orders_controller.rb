@@ -56,6 +56,17 @@ class InfluencerOrdersController < ApplicationController
     @influencer_orders = InfluencerOrder.where(id: ids).page(params[:page]).per(100)
   end
 
+  def delete
+    partial_orders = InfluencerOrder.where(id: delete_params[:influencer_orders])
+    count = partial_orders.count
+    complete_orders = partial_orders.flat_map { |order| InfluencerOrder.where(name: order.name) }
+
+    complete_orders.each(&:delete)
+    flash[:success] = "#{count} #{'order'.pluralize(count)} deleted."
+
+    redirect_to influencer_orders_path
+  end
+
   private
 
   def check_box_params
@@ -66,5 +77,9 @@ class InfluencerOrdersController < ApplicationController
     else
       params
     end
+  end
+
+  def delete_params
+    params.permit(influencer_orders: [])
   end
 end

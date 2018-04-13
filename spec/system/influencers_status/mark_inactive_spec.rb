@@ -10,7 +10,6 @@ RSpec.describe "Influencers Mark Inactive" do
         influencer4 = create(:influencer, :with_collection)
 
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencers_path
         find(:css, "#influencers_[value='#{influencer1.id}']").set(true)
@@ -31,7 +30,6 @@ RSpec.describe "Influencers Mark Inactive" do
         influencer = create(:influencer, :with_collection)
 
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencers_path
         click_on 'Mark Inactive'

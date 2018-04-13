@@ -17,7 +17,6 @@ RSpec.describe "Influencer Orders Create Once A Month" do
         Influencer.first.update(top_size: 'M')
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -44,7 +43,6 @@ RSpec.describe "Influencer Orders Create Once A Month" do
         Timecop.freeze(Date.today.end_of_month) do
           user = create(:user)
 
-          visit new_user_session_path
           login(user)
           within '#influencers_dropdown' do
             click_on 'Influencers'
@@ -75,7 +73,6 @@ RSpec.describe "Influencer Orders Create Once A Month" do
       Timecop.return
 
       user = create(:user)
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -97,7 +94,6 @@ RSpec.describe "Influencer Orders Create Once A Month" do
       Influencer.any_instance.stub(:shipping_address).and_return(nil)
       user = create(:user)
 
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -134,7 +130,7 @@ RSpec.describe "Influencer Orders Create Once A Month" do
       )
       user = create(:user)
       Timecop.freeze(Time.zone.now.end_of_month) do
-        visit new_user_session_path
+
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -152,8 +148,6 @@ RSpec.describe "Influencer Orders Create Once A Month" do
   it 'does not create orders for influencers who were updated this month, but inactive' do
     create(:influencer, :with_collection, active: false)
     user = create(:user)
-
-    visit new_user_session_path
     login(user)
     within '#influencers_dropdown' do
       click_on 'Influencers'

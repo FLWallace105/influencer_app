@@ -4,7 +4,7 @@ RSpec.describe "Influencers Import" do
     describe 'successfully creates influencers' do
       it 'creates one influencer' do
         user = create(:user)
-        visit new_user_session_path
+
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -19,7 +19,7 @@ RSpec.describe "Influencers Import" do
 
       it 'saves all the attributes correctly' do
         user = create(:user)
-        visit new_user_session_path
+
         login(user)
         visit new_influencer_path
         attach_file("influencer_import_file", Rails.root + "spec/support/csv_files/one_valid_influencer.csv")
@@ -45,7 +45,7 @@ RSpec.describe "Influencers Import" do
 
       it 'does not create an influencer_order' do
         user = create(:user)
-        visit new_user_session_path
+
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -60,7 +60,7 @@ RSpec.describe "Influencers Import" do
 
       it 'creates many influencers' do
         user = create(:user)
-        visit new_user_session_path
+
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -75,7 +75,7 @@ RSpec.describe "Influencers Import" do
 
       it 'updates the updated_at column even if nothing is different in the csv row from the database' do
         user = create(:user)
-        visit new_user_session_path
+
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -97,7 +97,7 @@ RSpec.describe "Influencers Import" do
 
       it 'updates the active column to true when importing an influencer that already exists the database.' do
         user = create(:user)
-        visit new_user_session_path
+
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -119,7 +119,7 @@ RSpec.describe "Influencers Import" do
 
       it 'creates influencers when the sizes are downcased' do
         user = create(:user)
-        visit new_user_session_path
+
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -134,7 +134,7 @@ RSpec.describe "Influencers Import" do
 
       it 'upcases the sizes when they are downcased in the csv' do
         user = create(:user)
-        visit new_user_session_path
+
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -153,7 +153,7 @@ RSpec.describe "Influencers Import" do
 
       it 'strips the whitespace from the csv data' do
         user = create(:user)
-        visit new_user_session_path
+
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -178,7 +178,6 @@ RSpec.describe "Influencers Import" do
       create(:influencer, collection_id: product.collections.first.id, email: 'tester1@gmail.com')
 
       user = create(:user)
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -193,7 +192,6 @@ RSpec.describe "Influencers Import" do
 
     it 'does not create influencers with invalid emails' do
       user = create(:user)
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -208,7 +206,6 @@ RSpec.describe "Influencers Import" do
 
     it 'shows the correct count of unsuccessful imports and the correct error message with the line in the csv file that the error is in' do
       user = create(:user)
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -224,7 +221,6 @@ RSpec.describe "Influencers Import" do
 
     it 'creates influencers from valid csv rows and does not create influencers from invalid csv rows' do
       user = create(:user)
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -241,7 +237,6 @@ RSpec.describe "Influencers Import" do
 
     it 'does not create influencers with invalid sizes' do
       user = create(:user)
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -257,7 +252,6 @@ RSpec.describe "Influencers Import" do
 
     it 'does not create an influencer when one already exists with the same email' do
       user = create(:user)
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -272,7 +266,6 @@ RSpec.describe "Influencers Import" do
 
     it 'does not create an influencer when one already exists with the same shipping address' do
       user = create(:user)
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -288,7 +281,6 @@ RSpec.describe "Influencers Import" do
 
     it 'does not create an influencer when one already exists with the same shipping address even if the csv has whitespace in the address data' do
       user = create(:user)
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'

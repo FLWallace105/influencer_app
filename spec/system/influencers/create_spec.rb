@@ -5,7 +5,6 @@ RSpec.describe "Influencers Create" do
     describe 'successfully creates an influencer' do
       it 'saves the influencer correctly in the database' do
         user = create(:user)
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -47,7 +46,6 @@ RSpec.describe "Influencers Create" do
 
       it 'allows the creation of an inactive influencer' do
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit new_influencer_path
         fill_in 'First name', with: 'Jane'
@@ -76,7 +74,6 @@ RSpec.describe "Influencers Create" do
     describe 'unsuccessfully updates an influencer' do
       it 'shows the correct error message' do
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit new_influencer_path
         click_on 'Create Influencer'
@@ -86,7 +83,6 @@ RSpec.describe "Influencers Create" do
 
       it 'does not create an influencer' do
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit new_influencer_path
         click_on 'Create Influencer'

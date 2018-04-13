@@ -6,7 +6,6 @@ RSpec.describe "Influencers Update" do
       it 'changes the influencer correctly in the database' do
         influencer = create(:influencer, :with_collection, first_name: 'Mary')
         user = create(:user)
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -23,7 +22,6 @@ RSpec.describe "Influencers Update" do
       it 'shows the new attributes in the form' do
         influencer = create(:influencer, :with_collection, last_name: 'Mary')
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit edit_influencer_path influencer
         fill_in 'Last name', with: 'Jane'
@@ -39,7 +37,6 @@ RSpec.describe "Influencers Update" do
       it 'shows the correct error messages' do
         influencer = create(:influencer, :with_collection)
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit edit_influencer_path influencer
         fill_in 'First name', with: ''
@@ -51,7 +48,6 @@ RSpec.describe "Influencers Update" do
       it 'does not update the influencer when validations fail' do
         influencer = create(:influencer, :with_collection, last_name: 'Mary')
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit edit_influencer_path influencer
         fill_in 'Last name', with: ''

@@ -7,7 +7,6 @@ RSpec.describe "Influencer Orders Create" do
         influencer = create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -32,7 +31,6 @@ RSpec.describe "Influencer Orders Create" do
         )
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -51,7 +49,6 @@ RSpec.describe "Influencer Orders Create" do
         influencer = create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -84,7 +81,6 @@ RSpec.describe "Influencer Orders Create" do
         )
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -115,7 +111,6 @@ RSpec.describe "Influencer Orders Create" do
         )
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -140,7 +135,6 @@ RSpec.describe "Influencer Orders Create" do
         )
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -164,7 +158,6 @@ RSpec.describe "Influencer Orders Create" do
 
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -197,7 +190,6 @@ RSpec.describe "Influencer Orders Create" do
         )
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -226,8 +218,6 @@ RSpec.describe "Influencer Orders Create" do
       influencer = create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
       Influencer.any_instance.stub(:shipping_address).and_return(nil)
       user = create(:user)
-
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'
@@ -250,8 +240,6 @@ RSpec.describe "Influencer Orders Create" do
     it 'does not create orders for influencers who are inactive' do
       create(:influencer, :with_collection, active: false)
       user = create(:user)
-
-      visit new_user_session_path
       login(user)
       within '#influencers_dropdown' do
         click_on 'Influencers'

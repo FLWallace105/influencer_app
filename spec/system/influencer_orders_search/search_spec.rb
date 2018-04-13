@@ -5,7 +5,6 @@ RSpec.describe "InfluencerOrders Search" do
     describe 'search for an order' do
       it 'shows the users query in the search field' do
         user = create(:user)
-        visit new_user_session_path
         login(user)
         within '#orders_dropdown' do
           click_on 'Orders'
@@ -26,7 +25,6 @@ RSpec.describe "InfluencerOrders Search" do
         )
 
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencer_orders_path
         fill_in "order name or influencer's name", with: "Ashley Green"
@@ -44,7 +42,6 @@ RSpec.describe "InfluencerOrders Search" do
           last_name: 'Descartes'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencer_orders_path
         fill_in "order name or influencer's name", with: "Rene"
@@ -62,7 +59,6 @@ RSpec.describe "InfluencerOrders Search" do
           last_name: 'Descartes'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencer_orders_path
         fill_in "order name or influencer's name", with: "Descartes"
@@ -80,7 +76,6 @@ RSpec.describe "InfluencerOrders Search" do
           last_name: 'Descartes'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencer_orders_path
         influencer_order_name = InfluencerOrder.first.name
@@ -99,7 +94,6 @@ RSpec.describe "InfluencerOrders Search" do
           last_name: 'Descartes'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencer_orders_path
         fill_in "order name or influencer's name", with: 'Aristotle'
@@ -128,7 +122,6 @@ RSpec.describe "InfluencerOrders Search" do
         )
 
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencer_orders_path
         fill_in "order name or influencer's name", with: ''
@@ -148,7 +141,6 @@ RSpec.describe "InfluencerOrders Search" do
           last_name: 'Descartes'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencer_orders_path
         fill_in "order name or influencer's name", with: '    Descartes    '
@@ -172,7 +164,6 @@ RSpec.describe "InfluencerOrders Search" do
 
 
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencer_orders_path
 
@@ -194,7 +185,6 @@ RSpec.describe "InfluencerOrders Search" do
         )
 
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencer_orders_path
         fill_in "order name or influencer's name", with: influencer1.orders.first.name

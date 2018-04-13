@@ -56,6 +56,20 @@ FactoryBot.define do
       end
     end
 
+    trait :with_another_three_product_order do
+      order_name = InfluencerOrder.generate_order_number
+      after(:create) do |influencer|
+        3.times do
+          create(
+            :influencer_order, shipping_address: influencer.shipping_address,
+                               billing_address: influencer.billing_address,
+                               influencer: influencer,
+                               name: order_name
+          )
+        end
+      end
+    end
+
     trait :with_collection do
       after(:build) do |influencer|
         custom_collection = create(:custom_collection, :with_three_products)

@@ -6,7 +6,6 @@ RSpec.describe "ShopifyCaches" do
     describe 'successfully refreshes the entire shopify cache' do
       it 'updates: Collect, CustomCollection, Product, ProductVariant', :js, :broken do
         user = create(:user)
-        visit new_user_session_path
         login(user)
         click_on 'Danger Zone'
         click_on 'Refresh Everything'

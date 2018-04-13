@@ -26,7 +26,7 @@ FactoryBot.define do
 
     line_item(
       { "size" => "ONE SIZE",
-        "item_name" => "350ml Rose Gold Bottle",
+        "item_name" => Faker::Beer.name,
         "product_id" => 8993522642,
         "sell_price" => 0.0,
         "product_weight" => 0,

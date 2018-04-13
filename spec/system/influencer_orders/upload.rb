@@ -14,7 +14,6 @@ RSpec.describe "Influencer Orders Upload" do
         )
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#orders_dropdown' do
           click_on 'Orders'
@@ -45,7 +44,6 @@ RSpec.describe "Influencer Orders Upload" do
         Influencer.first.orders.first.update(uploaded_at: Time.current)
         user = create(:user)
 
-        visit new_user_session_path
         login(user)
         within '#orders_dropdown' do
           click_on 'Orders'

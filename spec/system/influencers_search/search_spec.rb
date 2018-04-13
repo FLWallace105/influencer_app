@@ -5,7 +5,6 @@ RSpec.describe "Influencers Search" do
     describe 'search for an influencer' do
       it 'shows the users query in the search field'do
         user = create(:user)
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -24,7 +23,6 @@ RSpec.describe "Influencers Search" do
           last_name: 'Descartes'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencers_path
         fill_in "email or name", with: "Rene Descartes"
@@ -42,7 +40,6 @@ RSpec.describe "Influencers Search" do
           last_name: 'Descartes'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencers_path
         fill_in "email or name", with: "Rene"
@@ -60,7 +57,6 @@ RSpec.describe "Influencers Search" do
           last_name: 'Descartes'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         visit influencers_path
         fill_in "email or name", with: "Descartes"
@@ -77,7 +73,6 @@ RSpec.describe "Influencers Search" do
           email: 'the_email@example.com'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -98,7 +93,6 @@ RSpec.describe "Influencers Search" do
           last_name: 'the_last_name'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -127,7 +121,6 @@ RSpec.describe "Influencers Search" do
           :with_collection
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -154,7 +147,6 @@ RSpec.describe "Influencers Search" do
           email: 'the_email@example.com'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
@@ -174,7 +166,6 @@ RSpec.describe "Influencers Search" do
           last_name: 'Descartes'
         )
         user = create(:user)
-        visit new_user_session_path
         login(user)
         within '#influencers_dropdown' do
           click_on 'Influencers'
