@@ -91,7 +91,7 @@ RSpec.describe "Influencer Orders Create Once A Month" do
     it 'shows the email of the influencer whose order failed to be created along with the error message' do
       product = create(:product, :leggings, :with_collection_and_variants)
       create(:influencer, collection_id: product.collections.first.id, bottom_size: 'XL')
-      Influencer.any_instance.stub(:shipping_address).and_return(nil)
+      allow_any_instance_of(Influencer).to receive(:shipping_address).and_return(nil)
       user = create(:user)
 
       login(user)
