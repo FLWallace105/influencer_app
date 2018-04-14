@@ -1,13 +1,15 @@
 class EllieFTP < Net::FTP
   def initialize
     super
-    connect(ENV['ELLIE_FTP_HOST'], ENV['ELLIE_FTP_PORT'])
-    login(ENV['ELLIE_FTP_USERNAME'], ENV['ELLIE_FTP_PASSWORD'])
+    connect(Rails.application.credentials[:ellie_ftp][:host],
+            Rails.application.credentials[:ellie_ftp][:port])
+    login(Rails.application.credentials[:ellie_ftp][:username],
+          Rails.application.credentials[:ellie_ftp][:password])
   end
 
   def upload_orders_csv(file)
     directory = '/EllieInfluencer/ReceiveOrder'
-    puts "Starting orders csv upload of #{file} to #{directory} on #{ENV['ELLIE_FTP_HOST']}"
+    puts "Starting orders csv upload of #{file} to #{directory} on #{Rails.application.credentials[:ellie_ftp][:host]}"
     chdir directory
     put(File.open(file))
     close
