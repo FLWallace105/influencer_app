@@ -100,8 +100,8 @@ Rails.application.configure do
     :port           => '587',
     :authentication => :plain,
     :user_name      => 'apikey',
-    :password       => ENV['SENDGRID_API_KEY'],
-    :domain         => '',
+    :password       => Rails.application.credentials.production[:sendgrid][:api_key],
+    :domain         => 'no-reply@ellie.com',
     :enable_starttls_auto => true
   }
 end
