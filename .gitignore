@@ -20,5 +20,6 @@ log/*
 dump.rdb
 .env
 .env.test
-test_influencers.csv
-ORDRTRK_20180329164901.csv
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key

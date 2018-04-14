@@ -1,1 +1,1 @@
-ShopifyAPI::Base.site = "https://#{ENV['SHOPIFY_API_KEY']}:#{ENV['SHOPIFY_PASSWORD']}@#{ENV['SHOPIFY_SHOP_NAME']}.myshopify.com/admin"
+ShopifyAPI::Base.site = "https://#{Rails.application.credentials[:shopify][:api_key]}:#{Rails.application.credentials[:shopify][:password]}@#{Rails.application.credentials[:shopify][:shop_name]}.myshopify.com/admin"
