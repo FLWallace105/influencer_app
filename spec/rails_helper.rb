@@ -4,6 +4,10 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
+Rails.application.credentials[:ellie_ftp][:host] = '127.0.0.1'
+Rails.application.credentials[:ellie_ftp][:port] = '21212'
+Rails.application.credentials[:ellie_ftp][:username] = 'user'
+Rails.application.credentials[:ellie_ftp][:password] = 'password'
 require 'rspec/rails'
 require 'fake_ftp'
 require 'capybara/rails'

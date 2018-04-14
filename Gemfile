@@ -34,7 +34,6 @@ gem 'simple_form', '~> 4.0'
 gem 'kaminari', '~> 1.1', '>= 1.1.1' # Pagination
 
 group :development, :test do
-  gem 'dotenv-rails', '~> 2.2', '>= 2.2.1', require: 'dotenv/rails-now'
   gem 'factory_bot_rails', '~> 4.8', '>= 4.8.2'
   gem 'faker', '~> 1.8', '>= 1.8.7'
   gem 'pry-rails', '~> 0.3.6' # cause rails console to use pry
