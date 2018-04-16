@@ -27,3 +27,7 @@ prefix rake tasks with:
 ```sh
 RAILS_ENV=production
 ```
+start Resque workers with:
+```sh
+RAILS_ENV=production rake resque:work
+```
