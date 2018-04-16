@@ -1,6 +1,6 @@
 This is a Rails rebuild of [this Sinatra app](https://github.com/FLWallace105/influencer_order_processing "this influencer order processing app") which processes influencer orders for [ellie.com](https://www.ellie.com/ "ellie.com").
 
-###Testing
+### Testing
 - Although the automated test suite covers a lot, there are still some things that need to be manually tested:
 	1. The pulling the csv from the FTP Server, creating the InfluencerTracking object and then sending the influencer tracking email workflow.
 		1. In InfluencerOrder.name_csv prefix the string that method returns with TEST_
