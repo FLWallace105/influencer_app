@@ -1,0 +1,4 @@
+development: localhost:6379
+test: localhost:6379
+fi: localhost:6379
+production: <%= Rails.application.credentials[:production][:redis_url] %>

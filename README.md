@@ -15,11 +15,15 @@ Anytime the front end changes precompile the assets again with:
 ```sh
 rake assets:precompile
 ```
-start the server in produciton mode:
+start the server in production mode:
 ```sh
 rails s -e production
 ```
 To run rails console:
 ```sh
 rails c -e production
+```
+prefix rake tasks with:
+```sh
+RAILS_ENV=production
 ```
