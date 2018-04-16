@@ -21,8 +21,8 @@ class EllieFTP < Net::FTP
     directory = '/EllieInfluencer/SendOrder'
     puts "Polling tracking FTP server: #{directory}"
     chdir directory
-    # in production match against: ORDERTRK
-    mlsd.select { |entry| entry.type == 'file' && /TEST/.match?(entry.pathname) }.each do |entry|
+    # in production match against: ORDERTRK, when manually testing match against TEST
+    mlsd.select { |entry| entry.type == 'file' && /ORDERTRK/.match?(entry.pathname) }.each do |entry|
       puts "Found #{entry.pathname}"
       process_tracking_csv(entry.pathname)
     end

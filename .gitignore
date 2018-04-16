@@ -20,6 +20,7 @@ log/*
 dump.rdb
 .env
 .env.test
+public/assets
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
