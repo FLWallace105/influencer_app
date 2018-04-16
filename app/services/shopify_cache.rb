@@ -54,7 +54,7 @@ module ShopifyCache
     objects.each do |object|
       data = block_given? ? yield(object.attributes.as_json) : object.attributes.as_json
       # instead of resetting the table you can find_or_initialize_by(id: object.id)
-      # since the id's the the local DB are set as the id's in Shopify
+      # since the id's in the local DB are set as the id's in Shopify
       db_entity.find_or_initialize_by(id: object.id).update(data)
     end
     puts "Pull of #{api_entity} complete"

@@ -26,7 +26,7 @@ FactoryBot.define do
     # FactoryBot saves the order_name variable when the factory is loaded, therefore
     # when I want to test more than one influencer with a with_three_product_order
     # they will have the same order_name which is not supposed to happen.
-    # the quick fix is to create different traits so it will save two different
+    # the quick fix is to create different traits so each trait wil create different
     # order_names
     trait :with_three_product_order do
       order_name = InfluencerOrder.generate_order_number
