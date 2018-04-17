@@ -98,6 +98,18 @@ class Influencer < ApplicationRecord
                 search_term.split(' ').first, search_term.split(' ').last))
   end
 
+  def self.to_csv
+    attributes = %w[first_name last_name address1 address2 city state zip email
+                    phone bra_size top_size bottom_size sports_jacket_size
+                    three_item shipping_method_requested collection_id active]
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      all.each do |influencer|
+        csv << influencer.attributes.values_at(*attributes)
+      end
+    end
+  end
+
   private
 
   def unique_shipping_address

@@ -130,6 +130,10 @@
         </div>
         <div class='row'>
           <div class="col-sm-12 bottom-buffer">
+            <%= submit_tag("Download Selected Influencers CSV", formaction: download_selected_influencers_path,
+                           class: 'btn btn-primary btn-block') %>
+           </div>
+          <div class="col-sm-12 bottom-buffer">
             <%= submit_tag("Create Orders", formaction: influencer_orders_path,
                            "data-confirm" => "Are you sure you want to create influencer orders?",
                            class: 'btn btn-danger btn-block') %>
