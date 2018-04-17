@@ -43,7 +43,7 @@ class EllieFTP < Net::FTP
 
         unless tracking.email_sent?
           puts "Sending tracking email to #{tracking.influencer.email}"
-          InfluencerTrackingMailer.send_tracking_info(tracking).deliver_now
+          InfluencerTrackingMailer.send_tracking_info(tracking).deliver_later
         end
       rescue ActiveRecord::RecordNotFound => e
         puts e

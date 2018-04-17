@@ -95,6 +95,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # email config
+  config.action_mailer.default_url_options = { host: 'ec2-54-237-123-25.compute-1.amazonaws.com', port: 3000 }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address        => 'smtp.sendgrid.net',

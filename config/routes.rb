@@ -12,7 +12,8 @@ Rails.application.routes.draw do
         post :import
         post :mark_active, controller: :influencers_status
         post :mark_inactive, controller: :influencers_status
-        post :download, controller: :influencers_download
+        post :download_selected, controller: :influencers_download
+        get :download_all, controller: :influencers_download
       end
     end
 
