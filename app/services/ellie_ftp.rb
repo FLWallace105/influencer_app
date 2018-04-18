@@ -39,6 +39,7 @@ class EllieFTP < Net::FTP
         tracking = InfluencerTracking.find_or_initialize_by(
           order_name: tracking_line['fulfillment_line_item_id']
         )
+        next unless tracking.influencer.try(:email).present?
         tracking.update(carrier: tracking_line['carrier'], tracking_number: tracking_line['tracking_1'])
 
         unless tracking.email_sent?
