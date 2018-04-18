@@ -15,7 +15,7 @@ Anytime the front end changes precompile the assets again with:
 ```sh
 rake assets:precompile
 ```
-start the server in production mode:
+Start the server in production mode:
 ```sh
 rails s -e production
 ```
@@ -23,11 +23,16 @@ To run rails console:
 ```sh
 rails c -e production
 ```
-prefix rake tasks with:
+Prefix rake tasks with:
 ```sh
 RAILS_ENV=production
 ```
-start Resque workers with:
+Start Resque workers with:
 ```sh
 RAILS_ENV=production rake resque:work
 ```
+Kill the server with:
+```sh
+kill -9 {PID}
+```
+you find the PID in tmp/pids/server.pid
