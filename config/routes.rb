@@ -34,7 +34,6 @@ Rails.application.routes.draw do
 
     get '/influencers/search', to: 'influencers_search#search', as: 'influencers_search'
     get '/influencer_orders/search', to: 'influencer_orders_search#search', as: 'influencer_orders_search'
+    mount Resque::Server, at: '/jobs'
   end
-
-  mount Resque::Server, at: '/jobs'
 end
