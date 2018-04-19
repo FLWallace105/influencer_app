@@ -20,10 +20,16 @@ Anytime the front end changes precompile the assets again with:
 ```sh
 rake assets:precompile
 ```
-Start the server in production mode:
+To start the server in production mode:
 ```sh
 rails s -e production
 ```
+If you want the server to keep running when the ssh connection closes, start the server this way in production mode as described [here](https://stackoverflow.com/a/16420396):
+```sh
+screen rails s -e production
+```
+after that CTRL + A + D
+
 To run rails console:
 ```sh
 rails c -e production

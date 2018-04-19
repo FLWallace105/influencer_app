@@ -165,7 +165,7 @@ RSpec.describe "Influencer Orders Create" do
         click_on 'View Influencers'
         find(:css, "#Select_All").set(true)
         click_on 'Create Orders'
-        page.accept_alert
+        page.accept_alert # required if you run the test with javascript enabled
         sleep 2
         expect_to_see '100 products queued to ship.'
         expect(InfluencerOrder.count).to eq 100
