@@ -50,10 +50,11 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'listen', '>= 3.0.5', '< 3.2' # spring-watcher-listen gem dependency
   gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
+  gem 'chromedriver-helper', '~> 1.2'
 end
 
 group :test do
-  gem 'capybara', '~> 2.18'
+  gem 'capybara', '~> 3.0', '>= 3.0.2'
   gem 'launchy', '~> 2.4', '>= 2.4.3' # enhances capybara
   gem 'selenium-webdriver', '~> 3.11'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'

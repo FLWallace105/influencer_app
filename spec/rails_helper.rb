@@ -53,8 +53,13 @@ RSpec.configure do |config|
     driven_by :rack_test
   end
 
+  # To watch the browser click around on the tests with js enabled use this config
+  # config.before(:each, type: :system, js: true) do
+  #   driven_by :selenium, using: :firefox, screen_size: [1680, 1050]
+  # end
+
   config.before(:each, type: :system, js: true) do
-    driven_by :selenium, using: :firefox, screen_size: [1680, 1050]
+    driven_by :selenium_chrome_headless
   end
 
   # RSpec Rails can automatically mix in different behaviours to your tests
