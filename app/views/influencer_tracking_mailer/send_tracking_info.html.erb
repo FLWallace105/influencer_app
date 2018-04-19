@@ -1,4 +1,4 @@
-<%= "#{@influencer.first_name}, your order is on its way! Your tracking information is below:" %>
+<%= "#{@influencer.first_name.capitalize}, your order is on its way! Your tracking information is below:" %>
 <p>
   <%= "Carrier: #{@influencer_tracking.carrier}" %> <br />
   <%= "Tracking Number: #{@influencer_tracking.tracking_number}" %> <br />
