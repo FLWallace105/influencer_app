@@ -36,7 +36,7 @@ class Influencer < ApplicationRecord
 
   def sized_variants_from_collection
     product_ids = Collect.where(collection_id: collection_id).pluck(:product_id)
-    variants = ProductVariant.where(product_id: product_ids)
+    variants = ProductVariant.where(product_id: product_ids).includes(:product)
 
     variants.select do |variant|
       variant.size == 'ONE SIZE' || variant.size == sizes[variant.product.product_type]

@@ -12,7 +12,7 @@ gem 'puma', '~> 3.7'
 gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'resque', '~> 1.27', '>= 1.27.4'
 gem 'shopify_api', '~> 4.11'
-gem 'iconv', '~> 1.0', '>= 1.0.5'
+gem 'iconv', '~> 1.0', '>= 1.0.5' # translates strings between various encoding systems
 
 # DATABASE:
 gem 'pg', '~> 1.0'
@@ -26,7 +26,7 @@ gem 'email_validator', '~> 1.6'
 gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.1' # bootstrap-sass dependency
-gem 'bootswatch-rails', '~> 3.3', '>= 3.3.5'
+gem 'bootswatch-rails', '~> 3.3', '>= 3.3.5' # easy themes out of the box
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'turbolinks', '~> 5' # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -35,11 +35,12 @@ gem 'kaminari', '~> 1.1', '>= 1.1.1' # Pagination
 
 group :development, :test do
   gem 'factory_bot_rails', '~> 4.8', '>= 4.8.2'
-  gem 'faker', '~> 1.8', '>= 1.8.7'
+  gem 'faker', '~> 1.8', '>= 1.8.7' # generates fake data
   gem 'pry-rails', '~> 0.3.6' # cause rails console to use pry
   gem 'pry-byebug', '~> 3.6' # adds step-by-step debugging features
   gem 'rspec-rails', '~> 3.7', '>= 3.7.2'
   gem 'timecop', '~> 0.9.1'
+  gem 'bullet', '~> 5.7', '>= 5.7.5' # easily find and fix n+1 queries
 end
 
 group :development do
