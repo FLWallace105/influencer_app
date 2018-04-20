@@ -53,7 +53,7 @@ class InfluencerOrdersController < ApplicationController
 
   def index
     ids = InfluencerOrder.pluck(:name, :id).uniq(&:first).map(&:last)
-    @influencer_orders = InfluencerOrder.where(id: ids).page(params[:page]).per(100)
+    @influencer_orders = InfluencerOrder.where(id: ids).includes(:tracking).page(params[:page]).per(100)
   end
 
   def delete
