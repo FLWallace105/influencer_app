@@ -73,8 +73,6 @@ class InfluencerOrder < ApplicationRecord
 
   def self.search_by_name_or_last_name(query)
     where('influencer_full_name ILIKE ?', "%#{query}%")
-      .or(where('influencer_full_name ILIKE ?', "%#{query}"))
-      .or(where('influencer_full_name ILIKE ?', "#{query}%"))
       .or(where('name ILIKE ?', "%#{query}%"))
   end
 
