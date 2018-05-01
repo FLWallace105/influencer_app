@@ -19,6 +19,7 @@ class Influencer < ApplicationRecord
   validates :email, email: true
   validate :unique_shipping_address
   after_save :touch
+  strip_attributes
 
   def self.assign_from_row(row)
     influencer = find_or_initialize_by(email: row[:email])
@@ -29,7 +30,6 @@ class Influencer < ApplicationRecord
         :shipping_method_requested, :collection_id
       )
     )
-    strip_whitespace_from_attributes(influencer)
     upcase_sizes(influencer)
     influencer
   end
@@ -77,10 +77,6 @@ class Influencer < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}"
-  end
-
-  def self.strip_whitespace_from_attributes(influencer)
-    influencer.attributes.values.each { |attribute| attribute.try(:strip!) }
   end
 
   def self.upcase_sizes(influencer)
