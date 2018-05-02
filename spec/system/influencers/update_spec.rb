@@ -57,5 +57,41 @@ RSpec.describe "Influencers Update" do
         expect(influencer.reload.last_name).to eq 'Mary'
       end
     end
+
+    it 'does not save the whitespace' do
+      influencer = create(:influencer, :with_collection)
+      user = create(:user)
+      login(user)
+      visit edit_influencer_path(influencer)
+      fill_in 'First name', with: ' Jane '
+      fill_in 'Last name', with: '  Doe  '
+      fill_in 'Address Line One', with: ' 1234 Bandini St. '
+      fill_in 'Address Line Two', with: ' Unit 1234 '
+      fill_in 'City', with: ' Los Angeles'
+      fill_in 'State', with: ' CA '
+      fill_in 'Zip', with: ' 90210 '
+      fill_in 'Email', with: ' jane@doe.com '
+      fill_in 'Phone', with: ' 1234567890 '
+      fill_in 'Top size', with: ' M '
+      fill_in 'Leggings size', with: ' M '
+      fill_in 'Sports jacket size', with: ' M '
+      fill_in 'Collection', with: ' 1234567890 '
+      click_on 'Update Influencer'
+
+      expect(influencer.reload.first_name).to eq 'Jane'
+      expect(influencer.reload.last_name).to eq 'Doe'
+      expect(influencer.reload.address1).to eq '1234 Bandini St.'
+      expect(influencer.reload.address2).to eq 'Unit 1234'
+      expect(influencer.reload.city).to eq 'Los Angeles'
+      expect(influencer.reload.state).to eq 'CA'
+      expect(influencer.reload.zip).to eq '90210'
+      expect(influencer.reload.email).to eq 'jane@doe.com'
+      expect(influencer.reload.phone).to eq '1234567890'
+      expect(influencer.reload.bra_size).to eq 'M'
+      expect(influencer.reload.top_size).to eq 'M'
+      expect(influencer.reload.bottom_size).to eq 'M'
+      expect(influencer.reload.sports_jacket_size).to eq 'M'
+      expect(influencer.reload.collection_id).to eq 1234567890
+    end
   end
 end
