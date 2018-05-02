@@ -61,7 +61,7 @@ You find the PID in tmp/pids/server.pid
 
 Alternatively you can kill the server from systemd:
 ```
-sudo systemctl stop start rails-influencers-app.service
+sudo systemctl stop rails-influencers-app.service
 ```
 To check the status of a systemd service:
 ```
