@@ -16,7 +16,7 @@ This is a Rails rebuild of [this Sinatra app](https://github.com/FLWallace105/in
 		6. Remember to delete the test Influencer, the test InfluencerOrder, and the test InfluencerTracking when you are done. Also put the ellie_ftp production credentials back.
 
 ### Production
-Anytime the front end changes precompile the assets again with:
+Anytime the front end assets change precompile them again with:
 ```sh
 rake assets:precompile
 ```
@@ -30,6 +30,12 @@ screen rails s -e production
 ```
 after that CTRL + A + D
 
+Alternatively you can start the server from systemd:
+```
+cd /etc/systemd/system
+sudo systemctl start rails-influencers-app.service
+```
+
 To run rails console:
 ```sh
 rails c -e production
@@ -42,8 +48,22 @@ Start Resque workers with:
 ```sh
 RAILS_ENV=production rake resque:work
 ```
+Alternatively you can start workers from systemd:
+```
+cd /etc/systemd/system
+sudo systemctl start resque-worker-splat.service
+```
 Kill the server with:
 ```sh
 kill -9 {PID}
 ```
-you find the PID in tmp/pids/server.pid
+You find the PID in tmp/pids/server.pid
+
+Alternatively you can kill the server from systemd:
+```
+sudo systemctl stop start rails-influencers-app.service
+```
+To check the status of a systemd service:
+```
+sudo systemctl status [service_name]
+```
