@@ -73,6 +73,7 @@ RSpec.describe "Influencers Update" do
       fill_in 'Email', with: ' jane@doe.com '
       fill_in 'Phone', with: ' 1234567890 '
       fill_in 'Top size', with: ' M '
+      fill_in 'Bra size', with: ' M '
       fill_in 'Leggings size', with: ' M '
       fill_in 'Sports jacket size', with: ' M '
       fill_in 'Collection', with: ' 1234567890 '
