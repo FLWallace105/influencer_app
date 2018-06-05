@@ -2,7 +2,15 @@ module ShopifyCache
   # Caches both Products and the associated ProductVariants
   def self.pull_products
     pull_entity(ShopifyAPI::Product, Product) do |product_data|
+      puts product_data.inspect
+      puts "transforming ... "
+      product_data.delete_if {|key, value| key == "admin_graphql_api_id" }
+      puts product_data.inspect
       variants = product_data['variants'].map do |variant|
+        puts variant.inspect
+        puts "transforming variant ..."
+        variant.delete_if {|key, value| key == "admin_graphql_api_id" }
+        puts variant.inspect
         pv = ProductVariant.find_or_initialize_by(id: variant['id'])
         pv.update(variant)
         pv
@@ -55,6 +63,10 @@ module ShopifyCache
       data = block_given? ? yield(object.attributes.as_json) : object.attributes.as_json
       # instead of resetting the table you can find_or_initialize_by(id: object.id)
       # since the id's in the local DB are set as the id's in Shopify
+      puts data.inspect
+      data.delete_if {|key, value| key == "admin_graphql_api_id" }
+      puts "now transforming ..."
+      puts data
       db_entity.find_or_initialize_by(id: object.id).update(data)
     end
     puts "Pull of #{api_entity} complete"

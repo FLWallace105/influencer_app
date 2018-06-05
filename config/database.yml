@@ -2,9 +2,9 @@ development:
   adapter:  postgresql
   host:     localhost
   encoding: unicode
-  database: influencers_dev
+  database: influencers_development
   pool:     8
-  username: durrellchamorro
+  username: FWallace
   password:
 
 test:
@@ -13,7 +13,7 @@ test:
   encoding: unicode
   database: influencers_test
   pool:     8
-  username: durrellchamorro
+  username: FWallace
   password:
 
 production:
