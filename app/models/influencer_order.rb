@@ -12,7 +12,7 @@ class InfluencerOrder < ApplicationRecord
 
    ORDER_NUMBER_CHARACTERS = [('a'..'z').to_a, ('A'..'Z').to_a, ('0'..'9').to_a].flatten.to_a.freeze
 
-   def self.generate_order_number(prefix: '#IN')
+   def self.generate_order_number(prefix: '#INMK')
      prefix + (0..9).map{ORDER_NUMBER_CHARACTERS.sample}.join
    end
 

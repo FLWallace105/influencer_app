@@ -8,7 +8,7 @@ class EllieFTP < Net::FTP
   end
 
   def upload_orders_csv(file)
-    directory = '/EllieInfluencer/ReceiveOrder'
+    directory = '/MarikaInfluencer/ReceiveOrder'
     puts "Starting orders csv upload of #{file} to #{directory} on #{Rails.application.credentials[:ellie_ftp][:host]}"
     chdir directory
     put(File.open(file))
@@ -18,7 +18,7 @@ class EllieFTP < Net::FTP
   end
 
   def pull_order_tracking
-    directory = '/EllieInfluencer/SendOrder'
+    directory = '/MarikaInfluencer/SendOrder'
     puts "Polling tracking FTP server: #{directory}"
     chdir directory
     # in production match against: ORDERTRK, when manually testing match against TEST
@@ -34,7 +34,7 @@ class EllieFTP < Net::FTP
 
     # add all influencer lines to the database
     # send an email if one has not been sent already
-    tracking_data.select { |line| /^#IN/ =~ line['fulfillment_line_item_id'] }.each do |tracking_line|
+    tracking_data.select { |line| /^#INMK/ =~ line['fulfillment_line_item_id'] }.each do |tracking_line|
       begin
         tracking = InfluencerTracking.find_or_initialize_by(
           order_name: tracking_line['fulfillment_line_item_id']
