@@ -18,6 +18,9 @@ gem 'iconv', '~> 1.0', '>= 1.0.5' # translates strings between various encoding 
 gem 'pg', '~> 1.0'
 gem 'email_validator', '~> 1.6'
 gem 'strip_attributes', '~> 1.8'
+gem 'execjs'
+gem 'therubyracer', :platforms => :ruby
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
