@@ -6,7 +6,7 @@ class InfluencerOrdersController < ApplicationController
     if @influencer_order_creator.save
       flash[:success] =
         "#{@influencer_order_creator.created_count}
-        #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
+        {'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
       redirect_to influencers_path
     else
       flash.now[:danger] =
@@ -20,10 +20,13 @@ class InfluencerOrdersController < ApplicationController
     @influencer_order_creator = InfluencerOrder::Creator.new(check_box_params)
     @influencers = @influencer_order_creator.influencers.page(params[:page]).per(100)
 
+    # if InfluencerOrder.where("created_at >= ?", '2019-09-09').any?
+    #if InfluencerOrder.where("created_at > 	 ?", Time.zone.now.end_of_month).any?
     if InfluencerOrder.where("created_at >= ?", Time.zone.now.beginning_of_month).any?
       flash[:danger] = 'Influencer orders were already created this month.'
       redirect_to influencers_path
     elsif @influencer_order_creator.save
+	#if @influencer_order_creator.save
       flash[:success] =
         "#{@influencer_order_creator.created_count}
         #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."

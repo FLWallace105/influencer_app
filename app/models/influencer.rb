@@ -18,6 +18,7 @@ class Influencer < ApplicationRecord
   validates_uniqueness_of :email
   validates :email, email: true
   validate :unique_shipping_address
+  validate :address2_apartment
   after_save :touch
   strip_attributes
 
@@ -113,4 +114,18 @@ class Influencer < ApplicationRecord
     return if matches.size == 1 && persisted? && matches.first == Influencer.find(id) # must be updating the same influencer
     errors.add(:base, "Shipping address must be unique.") if matches.present?
   end
+
+  def address2_apartment
+    #validate address1 does not have pattern "202 E First, Apt. 22"
+    temp_address1 = address1.downcase
+
+    if temp_address1.match(/apt|#|ste|suite|,/i)
+      errors.add(:base, "Cannot have Apt/Suite/Ste/# OR comma (,) in Address1 field")
+    else
+      return
+    end
+
+  end
+
+
 end
