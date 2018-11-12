@@ -32,6 +32,7 @@ class Influencer < ApplicationRecord
       )
     )
     upcase_sizes(influencer)
+    trim_sizes(influencer)
     influencer
   end
 
@@ -86,6 +87,17 @@ class Influencer < ApplicationRecord
     influencer.bottom_size.try(:upcase!)
     influencer.sports_jacket_size.try(:upcase!)
   end
+
+  def self.trim_sizes(influencer)
+    #influencer.bra_size.try(:gsub(/\s+/, ""))
+    (influencer.bra_size || "").gsub(/\s+/, "")
+    (influencer.top_size || "").gsub(/\s+/, "")
+    (influencer.bottom_size || "").gsub(/\s+/, "")
+    (influencer.sports_jacket_size || "").gsub(/\s+/, "")
+  end
+
+
+
 
   def self.search_by_email_or_name(search_term)
     where('email ILIKE ?', "%#{search_term}%")
