@@ -34,6 +34,16 @@ Rails.application.routes.draw do
 
     get '/influencers/search', to: 'influencers_search#search', as: 'influencers_search'
     get '/influencer_orders/search', to: 'influencer_orders_search#search', as: 'influencer_orders_search'
+
+    #get "/404", to: "errors#not_found"
+    #get "/422", to: "errors#unacceptable"
+    #get "/500", to: "errors#internal_error"
+    %w(404 422 500).each do |status_code|
+      get status_code, to: "errors#show", status_code: status_code
+    end
+
+
+
     mount Resque::Server, at: '/jobs'
   end
 end

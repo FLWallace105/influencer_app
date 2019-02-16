@@ -13,6 +13,15 @@ gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'resque', '~> 1.27', '>= 1.27.4'
 gem 'shopify_api', '~> 4.11'
 gem 'iconv', '~> 1.0', '>= 1.0.5' # translates strings between various encoding systems
+gem "sinatra", ">= 2.0.2"
+gem "loofah", ">= 2.2.3"
+gem "sprockets", ">= 3.7.2"
+gem "ffi", ">= 1.9.24"
+gem "rubyzip", ">= 1.2.2"
+gem "rack", ">= 2.0.6"
+#gem "activestorage", ">= 5.2.1.1"
+#gem "activejob", ">= 5.2.1.1"
+#gem "nokogiri", ">= 1.8.5"
 
 # DATABASE:
 gem 'pg', '~> 1.0'
