@@ -129,13 +129,20 @@ class Influencer < ApplicationRecord
 
   def address2_apartment
     #validate address1 does not have pattern "202 E First, Apt. 22"
-    temp_address1 = address1.downcase
+    if !address1.nil? && address1 != ""
+      temp_address1 = address1.downcase
 
-    if temp_address1.match(/\sapt\s|#|\sste\s|\ssuite\s|\sapartment\s|\sunit\s|,/i)
-      errors.add(:base, "Cannot have Apt/Suite/Ste/# OR comma (,) in Address1 field")
+      if temp_address1.match(/\sapt\s|#|\sste\s|\ssuite\s|\sapartment\s|\sunit\s|,/i)
+        errors.add(:base, "Cannot have Apt/Suite/Ste/# OR comma (,) in Address1 field")
+      else
+        return
+      end
     else
       return
     end
+
+
+
 
   end
 
