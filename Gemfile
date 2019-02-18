@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 5.2.2'
 gem 'bootsnap', '~> 1.3' # Boot large ruby/rails apps faster
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
@@ -19,7 +19,7 @@ gem "sprockets", ">= 3.7.2"
 gem "ffi", ">= 1.9.24"
 gem "rubyzip", ">= 1.2.2"
 gem "rack", ">= 2.0.6"
-#gem "activestorage", ">= 5.2.1.1"
+gem "activestorage", ">= 5.2.1.1"
 #gem "activejob", ">= 5.2.1.1"
 #gem "nokogiri", ">= 1.8.5"
 
