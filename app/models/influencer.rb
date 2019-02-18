@@ -50,7 +50,7 @@ class Influencer < ApplicationRecord
       'Leggings' => bottom_size,
       'Tops' => top_size,
       'Sports Bra' => bra_size,
-      'Jacket' => sports_jacket_size
+      'sports-jacket' => sports_jacket_size
     }
   end
 
