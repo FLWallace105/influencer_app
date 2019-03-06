@@ -1,4 +1,6 @@
 class Influencer < ApplicationRecord
+  include StatesHelper
+
   has_many :orders, class_name: 'InfluencerOrder'
   has_many :tracking_info, class_name: 'InfluencerTracking'
 
@@ -19,6 +21,8 @@ class Influencer < ApplicationRecord
   validates :email, email: true
   validate :unique_shipping_address
   validate :address2_apartment
+  validate :address2_comma
+  validate :check_states_field
   after_save :touch
   strip_attributes
 
@@ -33,6 +37,7 @@ class Influencer < ApplicationRecord
     )
     upcase_sizes(influencer)
     trim_sizes(influencer)
+    fix_states_field(influencer)
     influencer
   end
 
@@ -119,6 +124,40 @@ class Influencer < ApplicationRecord
     end
   end
 
+  def self.fix_states_field(influencer)
+    #puts "I am here"
+    temp_state = influencer.state
+    if !temp_state.nil?
+    
+    state_field_length = temp_state.length
+
+    if state_field_length > 2
+      #puts "state_field_length = #{state_field_length}"
+      puts "long state name = #{influencer.state}"
+      real_state_abbreviation = States.key(influencer.state)
+      puts "real_state_abbreviation = #{real_state_abbreviation}"
+      if !real_state_abbreviation.nil?
+        influencer.state = real_state_abbreviation
+        return
+      else
+        #errors.add(:base, "cannot find Valid State Full Name State: #{influencer.state}")
+        return
+      end
+
+    end
+
+    else
+      puts "Nil value for State"
+    end
+
+
+
+  end
+
+
+
+
+
   private
 
   def unique_shipping_address
@@ -145,6 +184,62 @@ class Influencer < ApplicationRecord
 
 
   end
+
+  def address2_comma
+    if !address2.nil? && address2 != ""
+      temp_address2 = address2.downcase
+
+      if temp_address2.match(/,/i)
+        errors.add(:base, "Cannot have comma (,) in Address3 field")
+      else
+        return
+      end
+    else
+      return
+    end
+
+  end
+
+
+  def check_states_field
+    #framework here for checking error conditions
+    if !state.nil?
+    state_field_length = state.length
+    
+    if state_field_length == 2
+      if States.has_key?(state.to_sym)
+        return
+      else
+        errors.add(:base, "cannot find Valid State Abbreviation two letter code for state: #{state}")
+        return
+      end
+
+    elsif state_field_length > 2
+      puts "long state name = #{state}"
+      real_state_abbreviation = States.key(state)
+      if real_state_abbreviation.nil?
+        errors.add(:base, "cannot find Valid State Full Name State: #{state}")
+        return
+
+      else
+        return
+      end
+
+
+
+    else
+      #state is either 1 long
+      errors.add(:base, "State Field Cannot have just one character")
+      return
+    end
+
+  end
+
+  else
+    errors.add(:base, "State Field Cannot be blank")
+    return
+  end
+  
 
 
 end
