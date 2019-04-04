@@ -22,6 +22,7 @@ class Influencer < ApplicationRecord
   validate :unique_shipping_address
   validate :address2_apartment
   validate :address2_comma
+  validate :city_field_comma
   validate :check_states_field
   after_save :touch
   strip_attributes
@@ -180,9 +181,6 @@ class Influencer < ApplicationRecord
       return
     end
 
-
-
-
   end
 
   def address2_comma
@@ -190,13 +188,28 @@ class Influencer < ApplicationRecord
       temp_address2 = address2.downcase
 
       if temp_address2.match(/,/i)
-        errors.add(:base, "Cannot have comma (,) in Address3 field")
+        errors.add(:base, "Cannot have comma (,) in Address2 field")
       else
         return
       end
     else
       return
     end
+
+  end
+
+  def city_field_comma
+    if !city.nil? && city != ""
+      temp_city = city
+      if temp_city.match(/,/i)
+        errors.add(:base, "Cannot have comma (,) in City Field")
+      else
+        return
+      end
+    else
+      return
+    end
+
 
   end
 
