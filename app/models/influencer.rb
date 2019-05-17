@@ -36,9 +36,11 @@ class Influencer < ApplicationRecord
         :shipping_method_requested, :collection_id
       )
     )
+  
     upcase_sizes(influencer)
     trim_sizes(influencer)
     fix_states_field(influencer)
+    puts "Now influencer = #{influencer.inspect}"
     influencer
   end
 

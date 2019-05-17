@@ -78,10 +78,10 @@
                     <%= order.influencer_full_name %>
                   </td>
                   <td>
-                    <%= order.created_at.strftime('%B %e at %l:%M %p') %>
+                    <%= order.created_at.strftime('%b %e %Y at %l:%M %p') %>
                   </td>
                   <td>
-                    <%= order.uploaded_at.try(:strftime, '%B %e at %l:%M %p') %>
+                    <%= order.uploaded_at.try(:strftime, '%b %e %Y at %l:%M %p') %>
                   </td>
                   <td>
                     <%= order.tracking.try(:carrier) %>
@@ -90,10 +90,10 @@
                     <%= order.tracking.try(:tracking_number) %>
                   </td>
                   <td>
-                    <%= order.tracking.try(:created_at).try(:strftime, '%B %e at %l:%M %p') %>
+                    <%= order.tracking.try(:created_at).try(:strftime, '%b %e %Y at %l:%M %p') %>
                   </td>
                   <td>
-                    <%= order.tracking.try(:email_sent_at).try(:strftime, '%B %e at %l:%M %p') %>
+                    <%= order.tracking.try(:email_sent_at).try(:strftime, '%b %e %Y at %l:%M %p') %>
                   </td>
                 </tr>
               <% end %>
