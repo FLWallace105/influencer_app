@@ -1,0 +1,15 @@
+<div class='row'>
+
+    <div class="col col-sm-12 top-buffer"</div>
+        <div class='alert alert-info text-center' >
+        Here is your Order Interval:
+        </div>
+
+    <% @order_interval.each do |my_interval| %>
+        <h3>Start Date: <%= my_interval.start_date.strftime("%F") %></h3>
+        <h3>End Date: <%= my_interval.end_date.strftime("%F") %></h3>
+        <h3>Use the Order Interval?: <%= my_interval.usage %></h3>
+    <% end %>
+
+</div>
+</div>

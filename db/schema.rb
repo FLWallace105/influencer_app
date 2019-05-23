@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180412192615) do
+ActiveRecord::Schema.define(version: 2019_05_21_192127) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "citext"
+  enable_extension "plpgsql"
 
   create_table "collects", id: :bigint, default: nil, force: :cascade do |t|
     t.bigint "collection_id"
@@ -87,6 +87,14 @@ ActiveRecord::Schema.define(version: 20180412192615) do
     t.datetime "updated_at", null: false
     t.boolean "active", default: true
     t.index ["updated_at"], name: "index_influencers_on_updated_at"
+  end
+
+  create_table "order_intervals", force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean "usage", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "product_variants", id: :bigint, default: nil, force: :cascade do |t|

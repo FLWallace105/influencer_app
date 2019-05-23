@@ -11,6 +11,23 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
          <% if user_signed_in? %>
+
+         <li id='order_interval_dropdown' class="dropdown">
+            <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+              Order Interval
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" id="deals-dropdown">
+              <li>
+                <%= link_to "Create New Order Interval/Wipe Out Old One", order_interval_new_path %>
+              </li>
+              <li>
+                <%= link_to "See Existing Order Interval", order_interval_edit_path %>
+              </li>
+              
+            </ul>
+          </li>
+
          <li>
            <%= link_to "Refresh Shopify Cache", refresh_all_shopify_cache_path, method: :put %>
          </li>
@@ -37,6 +54,7 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" id="deals-dropdown">
+
               <li>
                 <%= link_to "View Influencer Orders", influencer_orders_path %>
               </li>

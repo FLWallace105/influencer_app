@@ -1,6 +1,7 @@
 require 'resque/server'
 
 Rails.application.routes.draw do
+  #get 'order_interval/create'
   devise_for :users
   devise_scope :user do
     root to: 'visitors#home'
@@ -32,15 +33,17 @@ Rails.application.routes.draw do
       end
     end
 
+    get 'order_interval/new'
+    post 'order_interval/create'
+    get 'order_interval/edit'
+    patch 'order_interval/update'
+    get 'order_interval/index'
+    #get '/order_interval/create', to: 'order_interval#new', as: 'order_interval_new'
+
     get '/influencers/search', to: 'influencers_search#search', as: 'influencers_search'
     get '/influencer_orders/search', to: 'influencer_orders_search#search', as: 'influencer_orders_search'
 
-    #get "/404", to: "errors#not_found"
-    #get "/422", to: "errors#unacceptable"
-    #get "/500", to: "errors#internal_error"
-    %w(404 422 500).each do |status_code|
-      get status_code, to: "errors#show", status_code: status_code
-    end
+    
 
 
 

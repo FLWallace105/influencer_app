@@ -5,7 +5,9 @@ class InfluencerOrder::Creator
 
   def initialize(params)
     if params == :create_once_a_month
-      @influencers = Influencer.where("updated_at >= ? AND active = ?", Time.zone.now.beginning_of_month, true)
+      my_order_interval = OrderInterval.first
+      #@influencers = Influencer.where("updated_at >= ? AND active = ?", Time.zone.now.beginning_of_month, true)
+      @influencers = Influencer.where("updated_at >= ? AND updated_at <= ? AND active = ?", my_order_interval.start_date, my_order_interval.end_date,  true)
     else
       influencer_ids = params[:influencers]
       @influencers = Influencer.where(id: influencer_ids, active: true)

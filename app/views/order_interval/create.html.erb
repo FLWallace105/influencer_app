@@ -1,0 +1,17 @@
+<div class='row'>
+
+    <div class="col col-sm-12 top-buffer"</div>
+        <div class='alert alert-info text-center' >
+        Create Interval for Influencer Orders (app will check for no duplicates between this interval).
+        </div>
+        <p>order interval = <%= @order_interval.inspect %></p>
+        <%= simple_form_for @order_interval, url: order_interval_create_path do |f| %>
+        <%= f.input :start_date, label: 'Start Date for checking duplicate orders' %>
+
+        <%= f.input :end_date, label: 'End Date for checking duplicate orders' %>
+        <%= f.input :usage, label: 'Check to make sure we use these dates for duplicate orders' %>
+        <%= f.button :submit, class: 'btn btn-primary' %>
+
+        <% end %>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="row bottom-buffer">
+  <div class="col-sm-6 col-sm-offset-3">
+    <%= simple_form_for(order_interval, order_interval_create_path) do |f| %>
+      <%= f.input :start_date, as: :date %>
+      <%= f.input :end_date, as: :date %>
+      <%= f.input :usage %>
+      
+      <%= f.button :submit, class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

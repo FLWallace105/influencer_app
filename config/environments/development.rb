@@ -6,9 +6,6 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
-  #Custom Error pages dynamic too
-  config.exceptions_app = self.routes
-  #config.exceptions_app = ->(env) { ExceptionsController.action(:show).call(env) }
   
 
   # Do not eager load code on boot.
@@ -16,7 +13,7 @@ Rails.application.configure do
 
   # Show full error reports.
   # ---------> set to false to see custom error page, otherwise true
-  config.consider_all_requests_local = false
+  config.consider_all_requests_local = true
 
   
 
