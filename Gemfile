@@ -11,7 +11,7 @@ gem 'bootsnap', '~> 1.3' # Boot large ruby/rails apps faster
 gem 'puma', '~> 3.7'
 gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'resque', '~> 1.27', '>= 1.27.4'
-gem 'shopify_api', '~> 4.11'
+gem 'shopify_api', '9.2.0'
 gem 'iconv', '~> 1.0', '>= 1.0.5' # translates strings between various encoding systems
 gem "sinatra", ">= 2.0.2"
 gem "loofah", ">= 2.2.3"
@@ -31,6 +31,8 @@ gem 'strip_attributes', '~> 1.8'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+
+gem 'activerecord-import', '~> 1.0', '>= 1.0.4'
 
 # FRONT END:
 gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets

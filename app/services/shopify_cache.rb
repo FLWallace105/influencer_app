@@ -1,22 +1,45 @@
 module ShopifyCache
   # Caches both Products and the associated ProductVariants
   def self.pull_products
-    pull_entity(ShopifyAPI::Product, Product) do |product_data|
-      puts product_data.inspect
-      puts "transforming ... "
-      product_data.delete_if {|key, value| key == "admin_graphql_api_id" }
-      puts product_data.inspect
-      variants = product_data['variants'].map do |variant|
-        puts variant.inspect
-        puts "transforming variant ..."
-        variant.delete_if {|key, value| key == "admin_graphql_api_id" }
-        puts variant.inspect
-        pv = ProductVariant.find_or_initialize_by(id: variant['id'])
-        pv.update(variant)
-        pv
+    product_count = ShopifyAPI::Product.count()
+    puts "Starting pull of Product"
+    puts "Found #{product_count} records"
+
+    Product.delete_all
+    ActiveRecord::Base.connection.reset_pk_sequence!('products')
+    ProductVariant.delete_all
+    ActiveRecord::Base.connection.reset_pk_sequence!('product_variants')
+
+    products = []
+    variants = []
+    shopify_products = ShopifyAPI::Product.find(:all)
+
+    shopify_products.each do |shopify_product|
+      products << build_product(shopify_product)
+      shopify_variants = shopify_product.variants
+
+      shopify_variants.each do |shopify_variant|
+        variants << build_variant(shopify_variant)
       end
-      product_data.merge('variants' => variants)
+      wait_for_shopify_credits
     end
+
+    while shopify_products.next_page?
+      shopify_products = shopify_products.fetch_next_page
+
+      shopify_products.each do |shopify_product|
+        products << build_product(shopify_product)
+
+        shopify_variants = shopify_product.variants
+        shopify_variants.each do |shopify_variant|
+          variants << build_variant(shopify_variant)
+        end
+      end
+      wait_for_shopify_credits
+    end
+
+    store(Product, products.flatten)
+    store(ProductVariant, variants.flatten)
   end
 
   def self.pull_collects
@@ -48,36 +71,125 @@ module ShopifyCache
   # Returns: nil
   def self.pull_entity(api_entity, db_entity, query_params = {})
     puts "Starting pull of #{api_entity}"
-    count = api_entity.count
-    puts "Found #{count} records"
-    limit = 250
-    pages = count.fdiv(limit).ceil
+    puts "Found #{api_entity.count} records"
 
-    objects = (1..pages).flat_map do |page|
-      where_args = query_params.merge(limit: limit, page: page)
-      shopify_api_throttle
-      api_entity.where(where_args)
+    db_entity.delete_all
+    ActiveRecord::Base.connection.reset_pk_sequence!(db_entity.to_s.tableize)
+
+    shopify_resources = api_entity.find(:all, params: { limit: 250 })
+    resources = []
+    resources << process_resources(db_entity.to_s.tableize, shopify_resources)
+
+    while shopify_resources.next_page?
+      shopify_resources = shopify_resources.fetch_next_page
+      resources << process_resources(db_entity.to_s.tableize, shopify_resources)
+      wait_for_shopify_credits
     end
 
-    objects.each do |object|
-      data = block_given? ? yield(object.attributes.as_json) : object.attributes.as_json
-      # instead of resetting the table you can find_or_initialize_by(id: object.id)
-      # since the id's in the local DB are set as the id's in Shopify
-      puts data.inspect
-      #data.tap { |d| d.delete(:admin_graphql_api_id) }
-      #data.delete("admin_graphql_api_id")
-      data.delete_if {|key, value| key == "admin_graphql_api_id" }
-      puts "now transforming ..."
-      puts data
-      db_entity.find_or_initialize_by(id: object.id).update(data)
-    end
-    puts "Pull of #{api_entity} complete"
+    store(db_entity, resources.flatten)
   end
 
-  def self.shopify_api_throttle
+  def self.wait_for_shopify_credits
     return if ShopifyAPI.credit_left > 5
+
     puts "CREDITS LEFT: #{ShopifyAPI.credit_left}"
     puts "SLEEPING 10"
     sleep 10
+  end
+
+  def self.store(db_entity, resources)
+    db_entity.import(resources, batch_size: 50, all_or_none: true)
+    puts "Total #{db_entity} stored: #{resources.count}"
+  end
+
+
+  def self.process_resources(collection_name, shopify_resources)
+    send("process_#{collection_name}", shopify_resources)
+  end
+
+  def self.process_custom_collections(custom_collections)
+    my_custom_collections = []
+    custom_collections.each do |custom_collection|
+      attributes = {
+        handle: custom_collection.handle,
+        title: custom_collection.title,
+        updated_at: custom_collection.updated_at,
+        body_html: custom_collection.body_html,
+        published_at: custom_collection.published_at,
+        sort_order: custom_collection.sort_order,
+        template_suffix: custom_collection.template_suffix,
+        published_scope: custom_collection.published_scope
+      }
+      my_custom_collections << CustomCollection.new(attributes)
+    end
+    my_custom_collections
+  end
+
+  def self.process_collects(collects)
+    my_collects = []
+    collects.each do |collect|  
+      collect_attributes = collect.attributes
+      attributes = {
+        collection_id: collect_attributes['collection_id'],
+        product_id: collect_attributes['product_id'],
+        featured: collect_attributes['featured'],
+        created_at: collect_attributes['created_at'],
+        updated_at: collect_attributes['updated_at'],
+        position: collect_attributes['position'],
+        sort_value: collect_attributes['sort_value']
+      }
+      my_collects << Collect.new(attributes)
+    end
+    my_collects
+  end
+
+  def self.build_product(product)
+    attributes = {
+      title: product.attributes['title'],
+      product_type: product.attributes['product_type'],
+      created_at: product.attributes['created_at'],
+      updated_at: product.attributes['updated_at'],
+      handle: product.attributes['handle'],
+      template_suffix: product.attributes['template_suffix'],
+      body_html: product.attributes['body_html'],
+      tags: product.attributes['tags'],
+      published_scope: product.attributes['published_scope'],
+      vendor: product.attributes['vendor'],
+      options: product.attributes['options'][0].attributes,
+      images: product.attributes['images'].map{|image| image.attributes },
+      image: product.attributes['image']
+    }
+    Product.new(attributes)
+  end
+
+  def self.build_variant(variant)
+    attributes = {
+      product_id: variant.prefix_options[:product_id],
+      title: variant.attributes['title'],
+      price: variant.attributes['price'],
+      sku: variant.attributes['sku'],
+      position: variant.attributes['position'],
+      inventory_policy: variant.attributes['inventory_policy'],
+      compare_at_price: variant.attributes['compare_at_price'],
+      fulfillment_service: variant.attributes['fulfillment_service'],
+      inventory_management: variant.attributes['inventory_management'],
+      option1: variant.attributes['option1'],
+      option2: variant.attributes['option2'],
+      option3: variant.attributes['option3'],
+      created_at: variant.attributes['created_at'],
+      updated_at: variant.attributes['updated_at'],
+      taxable: variant.attributes['taxable'],
+      barcode: variant.attributes['barcode'],
+      weight_unit: variant.attributes['weight_unit'],
+      weight: variant.attributes['weight'],
+      inventory_quantity: variant.attributes['inventory_quantity'],
+      image_id: variant.attributes['image_id'],
+      grams: variant.attributes['grams'],
+      inventory_item_id: variant.attributes['inventory_item_id'],
+      tax_code: variant.attributes['tax_code'] || '',
+      old_inventory_quantity: variant.attributes['old_inventory_quantity'],
+      requires_shipping: variant.attributes['requires_shipping']
+    }
+    ProductVariant.new(attributes)
   end
 end
