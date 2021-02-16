@@ -43,7 +43,7 @@ gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'turbolinks', '~> 5' # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'simple_form', '~> 4.0'
-gem 'kaminari', '~> 1.1', '>= 1.1.1' # Pagination
+gem 'kaminari', '~> 1.2' # Pagination
 
 group :development, :test do
   gem 'factory_bot_rails', '~> 4.8', '>= 4.8.2'
