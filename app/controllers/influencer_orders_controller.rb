@@ -6,7 +6,7 @@ class InfluencerOrdersController < ApplicationController
     if @influencer_order_creator.save
       flash[:success] =
         "#{@influencer_order_creator.created_count}
-        {'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
+        #{'product'.pluralize(@influencer_order_creator.created_count)} queued to ship."
       redirect_to influencers_path
     else
       flash.now[:danger] =

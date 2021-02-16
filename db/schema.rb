@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_21_192127) do
+ActiveRecord::Schema.define(version: 2021_02_15_171021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
 
-  create_table "collects", id: :bigint, default: nil, force: :cascade do |t|
+  create_table "collects", force: :cascade do |t|
     t.bigint "collection_id"
     t.datetime "created_at"
     t.boolean "featured"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2019_05_21_192127) do
     t.datetime "updated_at"
   end
 
-  create_table "custom_collections", id: :bigint, default: nil, force: :cascade do |t|
+  create_table "custom_collections", force: :cascade do |t|
     t.text "body_html"
     t.string "handle"
     t.string "image"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2019_05_21_192127) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "product_variants", id: :bigint, default: nil, force: :cascade do |t|
+  create_table "product_variants", force: :cascade do |t|
     t.string "barcode"
     t.float "compare_at_price"
     t.datetime "created_at"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 2019_05_21_192127) do
     t.string "tax_code", default: "", null: false
   end
 
-  create_table "products", id: :bigint, default: nil, force: :cascade do |t|
+  create_table "products", force: :cascade do |t|
     t.text "body_html"
     t.datetime "created_at"
     t.string "handle"

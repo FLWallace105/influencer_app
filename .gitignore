@@ -25,3 +25,8 @@ public/assets
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 start_resque_workers.sh
+
+config/credentials/
+config/credentials.yml.enc
+
+.byebug_history
