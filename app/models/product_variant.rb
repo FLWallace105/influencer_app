@@ -1,4 +1,5 @@
 class ProductVariant < ApplicationRecord
+
   serialize :metafield
   belongs_to :product
 

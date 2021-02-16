@@ -1,4 +1,5 @@
 class CustomCollection < ApplicationRecord
+
   serialize :metafield
 
   has_many :collects
