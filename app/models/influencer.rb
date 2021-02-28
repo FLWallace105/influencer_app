@@ -219,42 +219,25 @@ class Influencer < ApplicationRecord
   def check_states_field
     #framework here for checking error conditions
     if !state.nil?
-    state_field_length = state.length
+      state_field_length = state.length
     
-    if state_field_length == 2
-      if States.has_key?(state.to_sym)
-        return
+      if state_field_length == 2
+        if !States.has_key?(state.to_sym)
+          errors.add(:base, "cannot find Valid State Abbreviation two letter code for state: #{state}")
+        end
+      elsif state_field_length > 2
+        puts "long state name = #{state}"
+        real_state_abbreviation = States.key(state)
+        if real_state_abbreviation.nil?
+          errors.add(:base, "cannot find Valid State Full Name State: #{state}")
+        end
       else
-        errors.add(:base, "cannot find Valid State Abbreviation two letter code for state: #{state}")
-        return
+        #state is either 1 long
+        errors.add(:base, "State Field Cannot have just one character")
       end
-
-    elsif state_field_length > 2
-      puts "long state name = #{state}"
-      real_state_abbreviation = States.key(state)
-      if real_state_abbreviation.nil?
-        errors.add(:base, "cannot find Valid State Full Name State: #{state}")
-        return
-
-      else
-        return
-      end
-
-
-
     else
-      #state is either 1 long
-      errors.add(:base, "State Field Cannot have just one character")
-      return
+      errors.add(:base, "State Field Cannot be blank")
     end
-
   end
-
-  else
-    errors.add(:base, "State Field Cannot be blank")
-    return
-  end
-  
-
 
 end

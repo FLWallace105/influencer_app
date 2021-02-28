@@ -111,6 +111,7 @@ module ShopifyCache
     my_custom_collections = []
     custom_collections.each do |custom_collection|
       attributes = {
+        collection_id: custom_collection.id,
         handle: custom_collection.handle,
         title: custom_collection.title,
         updated_at: custom_collection.updated_at,
@@ -130,6 +131,7 @@ module ShopifyCache
     collects.each do |collect|  
       collect_attributes = collect.attributes
       attributes = {
+        collect_id: collect_attributes['id'],
         collection_id: collect_attributes['collection_id'],
         product_id: collect_attributes['product_id'],
         featured: collect_attributes['featured'],
@@ -145,6 +147,7 @@ module ShopifyCache
 
   def self.build_product(product)
     attributes = {
+      product_id: product.attributes['id'],
       title: product.attributes['title'],
       product_type: product.attributes['product_type'],
       created_at: product.attributes['created_at'],
@@ -164,6 +167,7 @@ module ShopifyCache
 
   def self.build_variant(variant)
     attributes = {
+      variant_id: variant.attributes['id'],
       product_id: variant.prefix_options[:product_id],
       title: variant.attributes['title'],
       price: variant.attributes['price'],
