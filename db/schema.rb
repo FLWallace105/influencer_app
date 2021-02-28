@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_171021) do
+ActiveRecord::Schema.define(version: 2021_02_28_144859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_171021) do
     t.bigint "product_id"
     t.string "sort_value"
     t.datetime "updated_at"
+    t.bigint "collect_id"
   end
 
   create_table "custom_collections", force: :cascade do |t|
@@ -38,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_171021) do
     t.string "template_suffix"
     t.string "title"
     t.datetime "updated_at"
+    t.bigint "collection_id"
   end
 
   create_table "influencer_orders", force: :cascade do |t|
@@ -125,6 +127,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_171021) do
     t.integer "weight"
     t.string "weight_unit"
     t.string "tax_code", default: "", null: false
+    t.bigint "variant_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -145,6 +148,7 @@ ActiveRecord::Schema.define(version: 2021_02_15_171021) do
     t.datetime "updated_at"
     t.text "variants"
     t.string "vendor"
+    t.bigint "product_id"
   end
 
   create_table "users", force: :cascade do |t|
