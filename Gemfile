@@ -56,7 +56,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'better_errors', '~> 2.4'
+  gem 'better_errors', '~> 2.8'
   gem 'web-console', '>= 3.3.0' # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'binding_of_caller', '~> 0.8.0' # better errors gem dependency
   gem 'spring', '~> 2.0', '>= 2.0.2' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
