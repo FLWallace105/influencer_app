@@ -8,7 +8,7 @@ class EllieFTP < Net::FTP
   end
 
   def upload_orders_csv(file)
-    directory = '/EllieInfluencer/ReceiveOrder'
+    directory = '/ReceiveOrder'
     puts "Starting orders csv upload of #{file} to #{directory} on #{Rails.application.credentials[:ellie_ftp][:host]}"
     chdir directory
     put(File.open(file))
@@ -18,7 +18,7 @@ class EllieFTP < Net::FTP
   end
 
   def pull_order_tracking
-    directory = '/EllieInfluencer/SendOrder'
+    directory = '/SendOrder'
     puts "Polling tracking FTP server: #{directory}"
     chdir directory
     # in production match against: ORDERTRK, when manually testing match against TEST
