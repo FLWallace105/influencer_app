@@ -8,7 +8,7 @@ end
 gem 'rails', '~> 5.2.2'
 gem 'bootsnap', '~> 1.3' # Boot large ruby/rails apps faster
 # Use Puma as the app server
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 4.3'
 gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'resque', '~> 1.27', '>= 1.27.4'
 gem 'shopify_api', '9.2.0'
